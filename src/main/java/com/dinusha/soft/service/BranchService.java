@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public interface BranchService {
     Logger LOGGER = Logger.getLogger(BranchService.class);
     @SuppressWarnings("unchecked")
-    Supplier<List<String>> GET_LIST = () -> {
+    Supplier<List<String>> GET_BRANCHES = () -> {
         LOGGER.debug("Retrieving branch data from API");
         JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply("http://localhost:9000/api/project_branches/list?project=SonarQubeOpenViolationMonitor"));
         JSONArray branchList = (JSONArray) branches.get("branches");

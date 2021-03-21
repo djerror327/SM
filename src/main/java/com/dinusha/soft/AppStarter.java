@@ -1,6 +1,6 @@
 package com.dinusha.soft;
 
-import com.dinusha.soft.service.BranchService;
+import com.dinusha.soft.service.ViolationService;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +13,7 @@ public class AppStarter {
         logger.info("App Starting");
         SpringApplication.run(AppStarter.class, args);
 
-        System.out.println(BranchService.GET_LIST.get());
+        System.out.println(ViolationService.GET_VIOLATION.apply(""));
         System.out.println();
     }
 }
