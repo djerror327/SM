@@ -15,7 +15,7 @@ import java.util.function.Function;
 public interface ViolationService {
     Logger LOGGER = Logger.getLogger(ViolationService.class);
 
-    //        SonarQubeOpenViolationMonitor
+    //SonarQubeOpenViolationMonitor
     Function<String, Map<String, Integer>> GET_VIOLATION = url -> {
 
         //given date
