@@ -1,6 +1,6 @@
 package com.dinusha.soft;
 
-import com.dinusha.soft.service.SonarFile;
+import com.dinusha.soft.service.SCM;
 import org.apache.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +12,8 @@ public class AppStarter {
     public static void main(String[] args) {
         logger.info("App Starting");
         SpringApplication.run(AppStarter.class, args);
-
-        System.out.println(SonarFile.GET_FILES.apply("", ""));
+        SCM.getCommits();
+//        System.out.println(SonarFile.GET_FILES.apply("", ""));
         System.out.println();
     }
 }
