@@ -9,10 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
-public class SCM {
+public interface SCM {
 
-    public static void getCommits() {
+    BiFunction<String, String, Map<String, Integer>> COMMITS = (url, key) -> {
 
         /**TODO*/
         //given date
@@ -43,5 +44,6 @@ public class SCM {
             //set commit count to 0 after branch analyzes
             commitCount = 0;
         }
-    }
+        return scmCommitCount;
+    };
 }

@@ -6,6 +6,7 @@ import reactor.util.retry.Retry;
 
 import java.time.Duration;
 import java.util.Objects;
+import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
 
@@ -16,6 +17,18 @@ public interface Client {
         LOGGER.info("GET -> " + url);
         return Objects.requireNonNull(webClient.get()
                 .uri(url)
+                .exchange()
+                .block())
+                .bodyToMono(String.class).retryWhen(Retry.fixedDelay(10, Duration.ofMillis(5000)))
+                .block();
+    };
+
+    BinaryOperator<String> GET_WITH_AUTH_HEADER = (authHeader, url) -> {
+        WebClient webClient = WebClient.create();
+        LOGGER.info("GET -> " + url);
+        return Objects.requireNonNull(webClient.get()
+                .uri(url)
+                .header("Authorization", authHeader)
                 .exchange()
                 .block())
                 .bodyToMono(String.class).retryWhen(Retry.fixedDelay(10, Duration.ofMillis(5000)))
