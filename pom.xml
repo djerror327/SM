@@ -8,10 +8,10 @@
     <artifactId>SM</artifactId>
     <version>1.0.0</version>
 
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <!--    <properties>-->
+    <!--        <maven.compiler.source>8</maven.compiler.source>-->
+    <!--        <maven.compiler.target>8</maven.compiler.target>-->
+    <!--    </properties>-->
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -48,5 +48,14 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -5,11 +5,13 @@ import com.dinusha.soft.utills.Paginate;
 import com.dinusha.soft.webclient.Client;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+@Service
 public interface SonarProject {
     Supplier<List<String>> PROJECTS = () -> {
 

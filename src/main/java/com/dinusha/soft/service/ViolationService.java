@@ -6,12 +6,14 @@ import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+@Service
 public interface ViolationService {
     Logger LOGGER = Logger.getLogger(ViolationService.class);
 
@@ -23,7 +25,7 @@ public interface ViolationService {
 
         Map<String, Integer> result = new HashMap<>();
 
-        List<String> branches = BranchService.GET_BRANCHES.get();
+        List<String> branches = BranchService.getBranches.apply(null);
 
         //violation count for given YYYY-mm
         int violationCount = 0;

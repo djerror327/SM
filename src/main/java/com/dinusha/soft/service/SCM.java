@@ -4,6 +4,7 @@ import com.dinusha.soft.utills.JsonUtil;
 import com.dinusha.soft.webclient.Client;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiFunction;
 
+@Service
 public interface SCM {
 
     BiFunction<String, String, Map<String, Integer>> COMMITS = (url, key) -> {

@@ -5,6 +5,7 @@ import com.dinusha.soft.utills.Paginate;
 import com.dinusha.soft.webclient.Client;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,10 +13,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
+@Service
 public interface SonarFile {
 
     BiFunction<String, String, Map<String, List<String>>> GET_FILES = (url, projectKey) -> {
-        List<String> branches = BranchService.GET_BRANCHES.get();
+        List<String> branches = BranchService.getBranches.apply(projectKey);
         Map<String, List<String>> branchFiles = new HashMap<>();
         for (String branch : branches) {
             String pagingData = Client.GET.apply("http://localhost:9000/api/measures/component_tree?ps=3&component=SonarQubeOpenViolationMonitor&branch=" + branch + "&metricKeys=ncloc");

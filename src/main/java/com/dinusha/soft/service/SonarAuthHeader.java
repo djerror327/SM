@@ -2,11 +2,14 @@ package com.dinusha.soft.service;
 
 
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
+@Service
 public interface SonarAuthHeader {
+
 
     Supplier<String> AUTH_HEADER = () -> {
 //        String username = env.getProperty("sonar.username");

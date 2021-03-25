@@ -1,6 +1,7 @@
 package com.dinusha.soft.webclient;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.util.retry.Retry;
 
@@ -10,6 +11,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
 
+@Component
 public interface Client {
     Logger LOGGER = Logger.getLogger(Client.class);
     UnaryOperator<String> GET = url -> {

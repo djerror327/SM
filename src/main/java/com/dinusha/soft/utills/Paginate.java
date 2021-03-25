@@ -1,9 +1,11 @@
 package com.dinusha.soft.utills;
 
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Component;
 
 import java.util.function.ToLongFunction;
 
+@Component
 public interface Paginate {
 
     ToLongFunction<JSONObject> RECURSION_COUNT = paging -> {

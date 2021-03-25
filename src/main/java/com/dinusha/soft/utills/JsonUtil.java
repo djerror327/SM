@@ -5,9 +5,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
+@Component
 public interface JsonUtil {
     Logger LOGGER = Logger.getLogger(JsonUtil.class);
     Function<String, JSONObject> JSON_OBJECT = value -> {
