@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AppStarter {
     private static final Logger logger = Logger.getLogger(AppStarter.class);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         logger.info("App Starting");
         SpringApplication.run(AppStarter.class, args);
 
@@ -21,7 +21,5 @@ public class AppStarter {
 //        SonarProject.projectsList();
 //        System.out.println(SonarProject.PROJECTS.get());
 //        SonarAuthHeader.AUTH_HEADER.get();
-
-//        System.out.println(BranchService.getBranches.apply("SonarQubeOpenViolationMonitor"));
     }
 }

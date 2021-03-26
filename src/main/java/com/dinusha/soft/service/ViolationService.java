@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public interface ViolationService {
+public class ViolationService {
     Logger LOGGER = Logger.getLogger(ViolationService.class);
 
     //SonarQubeOpenViolationMonitor
@@ -25,7 +25,7 @@ public interface ViolationService {
 
         Map<String, Integer> result = new HashMap<>();
 
-        List<String> branches = BranchService.getBranches.apply(null);
+        List<String> branches = new BranchService().getBranches.apply(null);
 
         //violation count for given YYYY-mm
         int violationCount = 0;
@@ -34,17 +34,17 @@ public interface ViolationService {
             //initialize violation count to 0 for each branch
             violationCount = 0;
             //paging related part
-            String pagingData = Client.GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3");
-            JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
+            String pagingData = new Client().GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3");
+            JSONObject pageObj = new JsonUtil().JSON_OBJECT.apply(pagingData);
 
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
-            long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
+            long recursionCount = new Paginate().RECURSION_COUNT.applyAsLong(paging);
 
             //loop all pages and collect violation data
             for (int page = 1; page <= recursionCount; page++) {
-                String violationObj = Client.GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3&p=" + page + "");
-                JSONObject jsonViolation = JsonUtil.JSON_OBJECT.apply(violationObj);
+                String violationObj = new Client().GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3&p=" + page + "");
+                JSONObject jsonViolation = new JsonUtil().JSON_OBJECT.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
                 for (Object issue : issueArr) {
                     JSONObject issueObj = (JSONObject) issue;

@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-public interface JsonUtil {
+public class JsonUtil {
     Logger LOGGER = Logger.getLogger(JsonUtil.class);
-    Function<String, JSONObject> JSON_OBJECT = value -> {
+    public Function<String, JSONObject> JSON_OBJECT = value -> {
         LOGGER.debug("Passing to JSON Object");
         JSONParser parser = new JSONParser();
         JSONObject object = null;
@@ -24,7 +24,7 @@ public interface JsonUtil {
         return object;
     };
 
-    Function<String, JSONArray> JSON_ARRAY = value -> {
+    public Function<String, JSONArray> JSON_ARRAY = value -> {
         LOGGER.debug("Passing to JSON Array");
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = null;

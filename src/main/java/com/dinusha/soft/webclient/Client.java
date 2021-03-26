@@ -12,9 +12,9 @@ import java.util.function.UnaryOperator;
 
 
 @Component
-public interface Client {
+public class Client {
     Logger LOGGER = Logger.getLogger(Client.class);
-    UnaryOperator<String> GET = url -> {
+    public UnaryOperator<String> GET = url -> {
         WebClient webClient = WebClient.create();
         LOGGER.info("GET -> " + url);
         return Objects.requireNonNull(webClient.get()
@@ -25,7 +25,7 @@ public interface Client {
                 .block();
     };
 
-    BinaryOperator<String> GET_WITH_AUTH_HEADER = (authHeader, url) -> {
+    public BinaryOperator<String> GET_WITH_AUTH_HEADER = (authHeader, url) -> {
         WebClient webClient = WebClient.create();
         LOGGER.info("GET -> " + url);
         return Objects.requireNonNull(webClient.get()

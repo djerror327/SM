@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.function.BiFunction;
 
 @Service
-public interface SCM {
+public class SCM {
 
     BiFunction<String, String, Map<String, Integer>> COMMITS = (url, key) -> {
 
@@ -23,13 +23,13 @@ public interface SCM {
         //commits count for a branch
         int commitCount = 0;
 
-        Map<String, List<String>> sonarSources = SonarFile.GET_FILES.apply("", "");
+        Map<String, List<String>> sonarSources = new SonarFile().GET_FILES.apply("", "");
 
         HashMap<String, Integer> scmCommitCount = new HashMap<>();
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
             for (String src : branch.getValue()) {
-                String commits = Client.GET.apply("http://localhost:9000/api/sources/scm?key=SonarQubeOpenViolationMonitor:" + src + "");
-                JSONObject jsonCommits = JsonUtil.JSON_OBJECT.apply(commits);
+                String commits = new Client().GET.apply("http://localhost:9000/api/sources/scm?key=SonarQubeOpenViolationMonitor:" + src + "");
+                JSONObject jsonCommits = new JsonUtil().JSON_OBJECT.apply(commits);
                 JSONArray scmArr = (JSONArray) jsonCommits.get("scm");
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {

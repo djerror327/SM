@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 @Service
-public interface SonarAuthHeader {
+public class SonarAuthHeader {
 
 
     Supplier<String> AUTH_HEADER = () -> {

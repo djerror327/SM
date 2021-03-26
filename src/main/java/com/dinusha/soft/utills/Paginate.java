@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.util.function.ToLongFunction;
 
 @Component
-public interface Paginate {
+public class Paginate {
 
-    ToLongFunction<JSONObject> RECURSION_COUNT = paging -> {
+    public ToLongFunction<JSONObject> RECURSION_COUNT = paging -> {
         double total = (long) paging.get("total");
         double pageSize = (long) paging.get("pageSize");
         return (long) Math.ceil(total / pageSize);
