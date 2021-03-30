@@ -6,6 +6,7 @@ import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +19,16 @@ import java.util.function.BiFunction;
 public class ViolationService {
     private static final Logger logger = Logger.getLogger(ViolationService.class);
 
+    @Autowired
+    private BranchService branchService;
     @Value("${sonar.host}")
     private String host;
 
     //SonarQubeOpenViolationMonitor
-    public BiFunction<String, String, Map<String, Integer>> GET_VIOLATION = (sonarProjectKey, date) -> {
+    public final BiFunction<String, String, Map<String, Integer>> getViolation = (sonarProjectKey, date) -> {
 
         Map<String, Integer> result = new HashMap<>();
-        List<String> branchesList = new BranchService().getBranches.apply(sonarProjectKey);
+        List<String> branchesList = branchService.getBranches.apply(sonarProjectKey);
 
         //violation count for given YYYY-mm (filter for specific month)
         int violationCount = 0;

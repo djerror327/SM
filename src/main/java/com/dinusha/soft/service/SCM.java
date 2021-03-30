@@ -23,7 +23,7 @@ public class SCM {
         //commits count for a branch
         int commitCount = 0;
 
-        Map<String, List<String>> sonarSources = new SonarFile().GET_FILES.apply("", "");
+        Map<String, List<String>> sonarSources = new SonarFile().getFiles.apply("");
 
         HashMap<String, Integer> scmCommitCount = new HashMap<>();
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
