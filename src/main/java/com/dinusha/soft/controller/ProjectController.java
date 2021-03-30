@@ -15,7 +15,7 @@ public class ProjectController {
     public void sonarProjects() {
 
 //       new  SonarProjectService().PROJECTS.get();
-        System.out.println(sonarProjectService.PROJECTS.get());
+        System.out.println(sonarProjectService.getProjects.get());
         System.out.println();
     }
 }

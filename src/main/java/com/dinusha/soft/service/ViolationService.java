@@ -6,45 +6,48 @@ import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 @Service
 public class ViolationService {
-    Logger LOGGER = Logger.getLogger(ViolationService.class);
+    private static final Logger logger = Logger.getLogger(ViolationService.class);
+
+    @Value("${sonar.host}")
+    private String host;
 
     //SonarQubeOpenViolationMonitor
-    Function<String, Map<String, Integer>> GET_VIOLATION = url -> {
-
-        //given date
-        String date = "2021-03";
+    public BiFunction<String, String, Map<String, Integer>> GET_VIOLATION = (sonarProjectKey, date) -> {
 
         Map<String, Integer> result = new HashMap<>();
+        List<String> branchesList = new BranchService().getBranches.apply(sonarProjectKey);
 
-        List<String> branches = new BranchService().getBranches.apply(null);
-
-        //violation count for given YYYY-mm
+        //violation count for given YYYY-mm (filter for specific month)
         int violationCount = 0;
-        for (String branch : branches) {
+        logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey);
+        for (String branch : branchesList) {
 
             //initialize violation count to 0 for each branch
             violationCount = 0;
             //paging related part
-            String pagingData = new Client().GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3");
-            JSONObject pageObj = new JsonUtil().JSON_OBJECT.apply(pagingData);
+            logger.debug("Reading paging sizes");
+            String pagingData = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
+            JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
 
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
-            long recursionCount = new Paginate().RECURSION_COUNT.applyAsLong(paging);
+            long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
 
             //loop all pages and collect violation data
+            logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
-                String violationObj = new Client().GET.apply("localhost:9000/api/issues/search?projectKeys=SonarQubeOpenViolationMonitor&resolved=false&branch=" + branch + "&ps=3&p=" + page + "");
-                JSONObject jsonViolation = new JsonUtil().JSON_OBJECT.apply(violationObj);
+                String violationObj = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
+                JSONObject jsonViolation = JsonUtil.JSON_OBJECT.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
                 for (Object issue : issueArr) {
                     JSONObject issueObj = (JSONObject) issue;
@@ -57,9 +60,10 @@ public class ViolationService {
                     }
                 }
             }
-            System.out.println("Violation count :" + violationCount);
+            logger.info("Reading violations of branch completed : " + branch);
             result.put(branch, violationCount);
         }
+        logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey + " completed");
         return result;
     };
 }

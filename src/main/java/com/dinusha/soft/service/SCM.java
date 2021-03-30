@@ -28,8 +28,8 @@ public class SCM {
         HashMap<String, Integer> scmCommitCount = new HashMap<>();
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
             for (String src : branch.getValue()) {
-                String commits = new Client().GET.apply("http://localhost:9000/api/sources/scm?key=SonarQubeOpenViolationMonitor:" + src + "");
-                JSONObject jsonCommits = new JsonUtil().JSON_OBJECT.apply(commits);
+                String commits = Client.GET.apply("http://localhost:9000/api/sources/scm?key=SonarQubeOpenViolationMonitor:" + src + "");
+                JSONObject jsonCommits = JsonUtil.JSON_OBJECT.apply(commits);
                 JSONArray scmArr = (JSONArray) jsonCommits.get("scm");
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {

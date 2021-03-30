@@ -8,15 +8,15 @@
     <artifactId>SM</artifactId>
     <version>1.0.0</version>
 
-    <!--    <properties>-->
-    <!--        <maven.compiler.source>8</maven.compiler.source>-->
-    <!--        <maven.compiler.target>8</maven.compiler.target>-->
-    <!--    </properties>-->
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.4.RELEASE</version>
+        <version>2.3.9.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <dependencies>

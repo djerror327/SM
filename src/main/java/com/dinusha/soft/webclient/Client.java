@@ -1,7 +1,6 @@
 package com.dinusha.soft.webclient;
 
 import org.apache.log4j.Logger;
-import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.util.retry.Retry;
 
@@ -10,11 +9,9 @@ import java.util.Objects;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
 
-
-@Component
-public class Client {
+public interface Client {
     Logger LOGGER = Logger.getLogger(Client.class);
-    public UnaryOperator<String> GET = url -> {
+    UnaryOperator<String> GET = url -> {
         WebClient webClient = WebClient.create();
         LOGGER.info("GET -> " + url);
         return Objects.requireNonNull(webClient.get()
@@ -25,7 +22,7 @@ public class Client {
                 .block();
     };
 
-    public BinaryOperator<String> GET_WITH_AUTH_HEADER = (authHeader, url) -> {
+    BinaryOperator<String> GET_WITH_AUTH_HEADER = (authHeader, url) -> {
         WebClient webClient = WebClient.create();
         LOGGER.info("GET -> " + url);
         return Objects.requireNonNull(webClient.get()

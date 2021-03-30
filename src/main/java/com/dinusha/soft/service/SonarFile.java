@@ -20,20 +20,20 @@ public class SonarFile {
         List<String> branches = new BranchService().getBranches.apply(projectKey);
         Map<String, List<String>> branchFiles = new HashMap<>();
         for (String branch : branches) {
-            String pagingData = new Client().GET.apply("http://localhost:9000/api/measures/component_tree?ps=3&component=SonarQubeOpenViolationMonitor&branch=" + branch + "&metricKeys=ncloc");
+            String pagingData = Client.GET.apply("http://localhost:9000/api/measures/component_tree?ps=3&component=SonarQubeOpenViolationMonitor&branch=" + branch + "&metricKeys=ncloc");
 
-            JSONObject pageObj = new JsonUtil().JSON_OBJECT.apply(pagingData);
+            JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
-            long recursionCount = new Paginate().RECURSION_COUNT.applyAsLong(paging);
+            long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
 
             //collect all file path for particular branch
             List<String> files = new ArrayList<>();
 
             //loop all pages and collect violation data
             for (int page = 1; page <= recursionCount; page++) {
-                String fileObj = new Client().GET.apply("http://localhost:9000/api/measures/component_tree?ps=3&component=SonarQubeOpenViolationMonitor&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
-                JSONObject jsonFiles = new JsonUtil().JSON_OBJECT.apply(fileObj);
+                String fileObj = Client.GET.apply("http://localhost:9000/api/measures/component_tree?ps=3&component=SonarQubeOpenViolationMonitor&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
+                JSONObject jsonFiles = JsonUtil.JSON_OBJECT.apply(fileObj);
                 JSONArray components = (JSONArray) jsonFiles.get("components");
                 for (Object component : components) {
                     JSONObject componentObj = (JSONObject) component;

@@ -20,11 +20,12 @@ public class BranchService {
     @Value("${sonar.host}")
     private String host;
 
+    //return all branches of specific SonarQube project
     @SuppressWarnings("unchecked")
     public final Function<String, List<String>> getBranches = key -> {
 
         logger.debug("Retrieving branch data from API");
-        JSONObject branches = new JsonUtil().JSON_OBJECT.apply(new Client().GET.apply(host
+        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply(host
                 + "api/project_branches/list?project=" + key));
         JSONArray branchList = (JSONArray) branches.get("branches");
         List<String> list = new ArrayList<>();

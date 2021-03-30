@@ -10,7 +10,6 @@ import java.util.function.Supplier;
 @Service
 public class SonarAuthHeader {
 
-
     Supplier<String> AUTH_HEADER = () -> {
 //        String username = env.getProperty("sonar.username");
 //        String ps = env.getProperty("sonar.ps");
