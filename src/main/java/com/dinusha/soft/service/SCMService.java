@@ -23,7 +23,7 @@ public class SCMService {
     @Value("${sonar.host}")
     private String host;
 
-    BiFunction<String, String, Map<String, Integer>> getCommits = (projectKey, date) -> {
+    public BiFunction<String, String, Map<String, Integer>> getCommits = (projectKey, date) -> {
 
         //commits count for a branch
         int commitCount = 0;
@@ -41,10 +41,8 @@ public class SCMService {
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {
                         JSONArray array = (JSONArray) scmData;
-
                         String smcDate = ((String) array.get(2)).substring(0, 7);
                         if (smcDate.equals(date)) {
-
                             commitCount += 1;
                             logger.debug("Branch : " + branch.getKey() + " commits count incrementing " + commits + " for : " + date);
                         }
