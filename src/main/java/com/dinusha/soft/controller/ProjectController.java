@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class ProjectController {
 
@@ -12,10 +14,7 @@ public class ProjectController {
     private SonarProjectService sonarProjectService;
 
     @GetMapping("/v1/projects")
-    public void sonarProjects() {
-
-//       new  SonarProjectService().PROJECTS.get();
-        System.out.println(sonarProjectService.getProjects.get());
-        System.out.println();
+    public List<String> sonarProjects() {
+        return sonarProjectService.getProjects.get();
     }
 }

@@ -27,7 +27,7 @@ public class SonarProjectService {
     public final Supplier<List<String>> getProjects = () -> {
         //paging related part
         logger.debug("Reading paging sizes");
-        String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.AUTH_HEADER.get(), host + "api/projects/search?ps=500&");
+        String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500&");
         JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
 
         //calculate paging count
@@ -38,7 +38,7 @@ public class SonarProjectService {
         //loop all pages and collect violation data
         logger.info("Reading project list from SonarQube");
         for (int page = 1; page <= recursionCount; page++) {
-            String projects = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.AUTH_HEADER.get(), host + "api/projects/search?ps=500&p=" + page + "");
+            String projects = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500&p=" + page + "");
             JSONObject jsonProjects = JsonUtil.JSON_OBJECT.apply(projects);
             JSONArray issueArr = (JSONArray) jsonProjects.get("components");
             for (Object project : issueArr) {
