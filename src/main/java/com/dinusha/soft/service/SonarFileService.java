@@ -17,9 +17,9 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class SonarFile {
+public class SonarFileService {
 
-    private static final Logger logger = Logger.getLogger(SonarFile.class);
+    private static final Logger logger = Logger.getLogger(SonarFileService.class);
     @Autowired
     private BranchService branchService;
     @Value("${sonar.host}")
