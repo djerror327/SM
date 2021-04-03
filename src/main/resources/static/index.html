@@ -1,10 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <!-- <script type="text/javascript" src="/js/ViolationService.js"></script>
+    <script type="text/javascript" src="/js/API.js"></script> -->
+    <script>
+        var responce;
+        function a() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    responce = this.responseText;
+                    document.getElementById("a").innerHTML=this.responseText;
+                }
+            };
+            xhttp.open("GET", "http://localhost:8080/v1/violations/SonarQubeOpenViolationMonitor/2021-03", true);
+            xhttp.send();
+            console.log(responce)
+        }
+    
+    </script>
     <title>Title</title>
 </head>
+
 <body>
-<h1>home page</h1>
+    <h1>home page</h1>
+    <h2 id ="a"></h2>
+    <button onclick="a()">clickme</button>
 </body>
+
 </html>
