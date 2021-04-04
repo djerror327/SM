@@ -1,6 +1,7 @@
 .body {
     color: #fafafa;
     background-color: #010101;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #header {
@@ -28,8 +29,8 @@
     /* opacity: 0.5; */
     padding: .2cm;
     /* float: left; */
-    width: 8cm;
-    min-height: 4cm;
+    width: 9cm;
+    height: 9cm;
     border: thin #171717 solid;
     margin: .1cm;
     font-size: small;
@@ -49,6 +50,20 @@
     padding: 5px;
     /* font-weight:bold; */
     
+}
+
+#AppTitle{
+    background-color: #ffdd2a;
+    height: auto;
+    color: #010101;
+    text-align: left;
+    padding: 10px;
+    
+}
+
+#projectName{
+    padding-left: 10px;
+    margin-top: 50px;
 }
 
 /* Responsive layout - makes a two column-layout instead of four columns */
