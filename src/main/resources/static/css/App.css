@@ -1,0 +1,72 @@
+.body {
+    color: #fafafa;
+    background-color: #010101;
+}
+
+#header {
+    /* border-color: white; */
+    /* border-style: solid; */
+}
+
+#section {
+    /* border-color: white;
+    border-style: solid; */
+}
+
+.tile {
+    float: left;
+    /* border-style: solid;
+    border-width: thin; */
+    /* border-color: white; */
+    border-radius: 15px;
+    /* height: 250px; */
+    /* width: 250px; */
+    background-color: #171717;
+    /* color: white; */
+    /* text-align: center; */
+    /* margin: 6px; */
+    /* opacity: 0.5; */
+    padding: .2cm;
+    /* float: left; */
+    width: 8cm;
+    min-height: 4cm;
+    border: thin #171717 solid;
+    margin: .1cm;
+    font-size: small;
+
+    overflow-x: auto;
+    overflow-y: auto;
+    white-space: nowrap;
+    
+    
+}
+
+.tileHeader{
+    text-align: center;
+}
+.tileContent{
+    text-align: left;
+    padding: 5px;
+    /* font-weight:bold; */
+    
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+
+@media screen and (max-width: 800px) {
+    .tile {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+
+@media screen and (max-width: 600px) {
+    .tile {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
