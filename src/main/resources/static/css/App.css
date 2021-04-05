@@ -58,15 +58,20 @@
 }
 
 #AppTitle {
-    display: inline;
-    position: relative; 
+    /* display: inline; */
+    /* position: absolute;  */
 }
 
 #searchBoxSection {
-    position: absolute; 
-    top: 10px; 
+    position: absolute;
+    top: 45px;
     right: 10px;
-    float: left;
+    float: right;
+    padding: 5px;
+}
+
+.searchInputFiled {
+    width: 5cm;
 }
 
 #projectName {
