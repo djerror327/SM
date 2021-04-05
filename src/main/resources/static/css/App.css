@@ -34,34 +34,42 @@
     border: thin #171717 solid;
     margin: .1cm;
     font-size: small;
-
     overflow-x: auto;
     overflow-y: auto;
     white-space: nowrap;
-    
-    
 }
 
-.tileHeader{
+.tileHeader {
     text-align: center;
 }
-.tileContent{
+
+.tileContent {
     text-align: left;
     padding: 5px;
     /* font-weight:bold; */
-    
 }
 
-#AppTitle{
+#header {
     background-color: #ffdd2a;
     height: auto;
     color: #010101;
     text-align: left;
     padding: 10px;
-    
 }
 
-#projectName{
+#AppTitle {
+    display: inline;
+    position: relative; 
+}
+
+#searchBoxSection {
+    position: absolute; 
+    top: 10px; 
+    right: 10px;
+    float: left;
+}
+
+#projectName {
     padding-left: 10px;
     margin-top: 50px;
 }
