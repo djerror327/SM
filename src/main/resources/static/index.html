@@ -6,21 +6,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="HandheldFriendly" content="true">
-    <script type="text/javascript" src="./js/service/ViolationService.js"></script>
-    <script type="text/javascript" src="./js/service/SCMService.js"></script>
-    <script type="text/javascript" src="./js/service/ProjectService.js"></script>
-    <script type="text/javascript" src="./js/api/API.js"></script>
     <link rel="stylesheet" href="./css/App.css">
     </link>
-    <script>
-
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <title>Title</title>
 </head>
 
 <body class="body">
     <header id="header">
         <h1 id="AppTitle">S-Monitor</h1>
+        <input type="search" id="search" onkeyup="search()"/>
+        <select id="searchItem">
+
+        </select>
+
     </header>
     <section id="section">
         <h2 id="a"></h2>
@@ -180,7 +179,7 @@
                         <td>damiddan.hsgdfhg@optongdgdfgline.net</td>
                         <td>47</td>
                     </tr>
-                    </table>
+                </table>
             </div>
         </div>
         <!-- <div class="tile">
@@ -212,6 +211,17 @@
     <button onclick="loadSCMData()">SCM Data</button>
     <button onclick="loadVialationData()">Violation data</button> -->
     </section>
+
+    <script type="text/javascript" src="./js/service/ViolationService.js"></script>
+    <script type="text/javascript" src="./js/service/SCMService.js"></script>
+    <script type="text/javascript" src="./js/service/ProjectService.js"></script>
+    <script type="text/javascript" src="./js/api/API.js"></script>
+    <script type="text/javascript" src="./js/SerchBox.js"></script>
+    <script>
+
+        //load search box project at page loading
+        loadProjectList();
+    </script>
 </body>
 
 
