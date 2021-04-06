@@ -51,32 +51,42 @@
 
 #header {
     background-color: #ffdd2a;
-    height: auto;
+    /* height: 70px; */
+    height: 2.2cm;
     color: #010101;
     text-align: left;
-    padding: 10px;
+    padding-left: 8px;
+
 }
 
 #AppTitle {
     /* display: inline; */
     /* position: absolute;  */
+    padding-top: 0.6cm;
+
 }
 
 #searchBoxSection {
     position: absolute;
-    top: 70px;
+    top: 1.8cm;
     right: 10px;
-    float: right;
-    padding: 5px;
+    float: left;
+    padding-left: 13px;
+    /* padding-top: 5px; */
+    padding-right: 8px;
 }
 
+#datePicker{
+    width: 145px;
+}
 .searchInputFiled {
-    width: 5cm;
+    /* width: 125px; */
+    width: 150px;
 }
 
 #projectName {
     padding-left: 10px;
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 /* Responsive layout - makes a two column-layout instead of four columns */
