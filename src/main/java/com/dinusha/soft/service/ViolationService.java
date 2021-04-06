@@ -20,6 +20,8 @@ public class ViolationService {
     private static final Logger logger = Logger.getLogger(ViolationService.class);
 
     @Autowired
+    private SonarAuthHeaderService sonarAuthHeaderService;
+    @Autowired
     private BranchService branchService;
     @Value("${sonar.host}")
     private String host;
@@ -32,6 +34,11 @@ public class ViolationService {
 
         //violation count for given YYYY-mm (filter for specific month)
         int violationCount = 0;
+
+        //violation for authors for specific branch section
+        HashMap<String, Integer> authorsMap = new HashMap<>();
+        Map<String, HashMap<String, Integer>> authorsBranch = new HashMap<>();
+
         logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey);
         for (String branch : branchesList) {
 
@@ -39,7 +46,8 @@ public class ViolationService {
             violationCount = 0;
             //paging related part
             logger.debug("Reading paging sizes");
-            String pagingData = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
+//            String pagingData = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
+            String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
             JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
 
             //calculate paging count
@@ -49,24 +57,41 @@ public class ViolationService {
             //loop all pages and collect violation data
             logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
-                String violationObj = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
+//                String violationObj = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
+                String violationObj = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
                 JSONObject jsonViolation = JsonUtil.JSON_OBJECT.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
                 for (Object issue : issueArr) {
                     JSONObject issueObj = (JSONObject) issue;
+                    //get updated date
                     String updateDate = issueObj.get("updateDate").toString();
+                    //get author
+                    String author = issueObj.get("author").toString();
                     String updateMonth = updateDate.substring(0, 7);
 
                     //calculate violations for given month
                     if (updateMonth.equals(date)) {
+                        if (authorsMap.containsKey(author)) {
+                            //check author is available then increment violations one by one
+                            int authorViolations = authorsMap.get(author);
+                            authorsMap.put(author, ++authorViolations);
+                        } else {
+                            //if author is new add 1 violation initially
+                            authorsMap.put(author, 1);
+                        }
                         violationCount += 1;
                     }
                 }
             }
             logger.info("Reading violations of branch completed : " + branch);
             result.put(branch, violationCount);
+            //set authors for branches with violation counts
+            authorsBranch.put(branch, authorsMap);
+            //set authors Map to 0 after analyzing specific branch
+            authorsMap = new HashMap<>();
         }
         logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey + " completed");
+        /** TODO set authors to final result*/
         return result;
     };
 }

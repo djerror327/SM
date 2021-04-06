@@ -1,4 +1,1 @@
-ProjectService : done
-BranchService : done
-ViolationService : done
-SonarFile : done
+ViolationService : need to set authors in final return object
