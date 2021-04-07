@@ -32,7 +32,7 @@
                 <h2>Violations</h2>
             </div>
             <div class="tileContent">
-                <table>
+                <table id="tblVioation">
                     <tr>
                         <td>master</td>
                         <td>23</td>
@@ -41,22 +41,7 @@
                         <td>dev</td>
                         <td>10</td>
                     </tr>
-                    <tr>
-                        <td>qa</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>hot fix</td>
-                        <td>23</td>
-                    </tr>
-                    <tr>
-                        <td>session</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>cherry</td>
-                        <td>5</td>
-                    </tr>
+
                 </table>
             </div>
         </div>
@@ -222,6 +207,9 @@
 
         //load search box project at page loading
         loadProjectList();
+
+        //testing
+        loadVialationData();
     </script>
 </body>
 

@@ -6,7 +6,7 @@ function projectAPI() {
 }
 
 function vioalionAPI(prjectKey, date) {
-    return "/v1/violations/" + prjectKey + "/" + date + "";
+    return hostName + "/v1/violations/" + prjectKey + "/" + date + "";
 }
 
 function scmAPI(prjectKey, date) {
