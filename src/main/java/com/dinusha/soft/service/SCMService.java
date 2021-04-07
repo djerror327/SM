@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiFunction;
 
 @Service
@@ -23,13 +20,15 @@ public class SCMService {
     @Value("${sonar.host}")
     private String host;
 
-    public BiFunction<String, String, Map<String, Integer>> getCommits = (projectKey, date) -> {
+    public final BiFunction<String, String, List<Object>> getCommits = (projectKey, date) -> {
 
         //commits count for a branch
         int commitCount = 0;
 
         Map<String, List<String>> sonarSources = sonarFileService.getFiles.apply(projectKey);
         HashMap<String, Integer> scmCommitCount = new HashMap<>();
+        HashMap<String, Integer> authorsMap = new HashMap<>();
+        HashMap<String, HashMap<String, Integer>> authorsBranch = new HashMap<>();
 
         logger.info("Reading sources in SonarQube branches");
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
@@ -41,8 +40,18 @@ public class SCMService {
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {
                         JSONArray array = (JSONArray) scmData;
+                        String author = (String) array.get(1);
                         String smcDate = ((String) array.get(2)).substring(0, 7);
                         if (smcDate.equals(date)) {
+                            //set authors commit count
+                            if (authorsMap.containsKey(author)) {
+                                //check author is available then increment commits one by one
+                                int authorCommits = authorsMap.get(author);
+                                authorsMap.put(author, ++authorCommits);
+                            } else {
+                                //if author is new add 1 commit initially
+                                authorsMap.put(author, 1);
+                            }
                             commitCount += 1;
                             logger.debug("Branch : " + branch.getKey() + " commits count incrementing " + commits + " for : " + date);
                         }
@@ -53,8 +62,21 @@ public class SCMService {
             logger.debug("Adding SCM commits for branches : " + scmCommitCount);
             //set commit count to 0 after branch analyzes
             commitCount = 0;
+            //set authorsMap to new object after calculating for specific branch
+            authorsBranch.put(branch.getKey(), authorsMap);
+            authorsMap = new HashMap<>();
         }
         logger.info("Reading sources in SonarQube branches completed!");
-        return scmCommitCount;
+
+        //creating final output
+        HashMap<String, HashMap<String, Integer>> branches = new HashMap<>();
+        branches.put("branch", scmCommitCount);
+        HashMap<String, HashMap<String, HashMap<String, Integer>>> users = new HashMap<>();
+        users.put("user", authorsBranch);
+        List<Object> output = new ArrayList<>();
+        output.add(branches);
+        output.add(users);
+
+        return output;
     };
 }
