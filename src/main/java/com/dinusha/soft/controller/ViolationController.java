@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 public class ViolationController {
@@ -16,7 +16,7 @@ public class ViolationController {
     private ViolationService violationService;
 
     @GetMapping("/v1/violations/{projectKey}/{date}")
-    public Map<String, Integer> getViolations(@PathVariable String projectKey, @PathVariable String date) {
+    public List<Object> getViolations(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/violations/" + projectKey + "/" + date);
         return violationService.getViolation.apply(projectKey, date);
     }

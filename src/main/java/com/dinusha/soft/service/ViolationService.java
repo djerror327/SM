@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.BiFunction;
 
 @Service
@@ -27,17 +27,17 @@ public class ViolationService {
     private String host;
 
     //SonarQubeOpenViolationMonitor
-    public final BiFunction<String, String, Map<String, Integer>> getViolation = (sonarProjectKey, date) -> {
+    public final BiFunction<String, String, List<Object>> getViolation = (sonarProjectKey, date) -> {
 
-        Map<String, Integer> result = new HashMap<>();
+        HashMap<String, Integer> result = new HashMap<>();
         List<String> branchesList = branchService.getBranches.apply(sonarProjectKey);
 
         //violation count for given YYYY-mm (filter for specific month)
-        int violationCount = 0;
+        int violationCount;
 
         //violation for authors for specific branch section
         HashMap<String, Integer> authorsMap = new HashMap<>();
-        Map<String, HashMap<String, Integer>> authorsBranch = new HashMap<>();
+        HashMap<String, HashMap<String, Integer>> authorsBranch = new HashMap<>();
 
         logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey);
         for (String branch : branchesList) {
@@ -46,7 +46,6 @@ public class ViolationService {
             violationCount = 0;
             //paging related part
             logger.debug("Reading paging sizes");
-//            String pagingData = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
             String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
             JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
 
@@ -57,7 +56,6 @@ public class ViolationService {
             //loop all pages and collect violation data
             logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
-//                String violationObj = Client.GET.apply(host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
                 String violationObj = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
                 JSONObject jsonViolation = JsonUtil.JSON_OBJECT.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
@@ -91,7 +89,16 @@ public class ViolationService {
             authorsMap = new HashMap<>();
         }
         logger.debug("Reading violations of all branches of SonarQube project key : " + sonarProjectKey + " completed");
-        /** TODO set authors to final result*/
-        return result;
+
+        //creating final output
+        HashMap<String, HashMap<String, Integer>> branches = new HashMap<>();
+        branches.put("branch", result);
+        HashMap<String, HashMap<String, HashMap<String, Integer>>> users = new HashMap<>();
+        users.put("user", authorsBranch);
+        List<Object> output = new ArrayList<>();
+        output.add(branches);
+        output.add(users);
+
+        return output;
     };
 }
