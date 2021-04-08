@@ -1,5 +1,5 @@
-async function commitTileService() {
-    const SCMURL = scmAPI('SonarQubeOpenViolationMonitor', '2021-03');
+async function commitTileService(projectKey, date) {
+    const SCMURL = scmAPI(projectKey, date);
     let commitData;
     await fetch(SCMURL)
         .then(res => res.json())

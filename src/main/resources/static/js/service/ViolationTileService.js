@@ -1,5 +1,5 @@
-async function violationTileService() {
-    const violationURL = vioalionAPI('SonarQubeOpenViolationMonitor', '2021-03');
+async function violationTileService(projectKey, date) {
+    const violationURL = vioalionAPI(projectKey, date);
     let violationData;
     await fetch(violationURL)
         .then(res => res.json())

@@ -1,5 +1,5 @@
-async function vbuService() {
-    const violationURL = vioalionAPI('ChatApp', '2021-04');
+async function vbuService(projectKey, date) {
+    const violationURL = vioalionAPI(projectKey, date);
     let violationData;
     await fetch(violationURL)
         .then(res => res.json())
