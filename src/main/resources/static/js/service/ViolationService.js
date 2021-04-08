@@ -7,17 +7,31 @@ async function loadVialationData() {
 
     //set violation tile data
     let jsonViolation = JSON.parse(violationData);
-
-
     let branchesObj = jsonViolation[0];
-    console.log("branchesObj ",branchesObj);
 
+    //get table tag
+    const table = document.getElementById('tblVioation');
     for (branches in branchesObj) {
-        console.log("barnches ", branchesObj[branches]);
-        for(branch in branches){
-            console.log("barnch ", branches[branch]);
+        let branchesName = branchesObj[branches];
+
+        for (branch in branchesName) {
+            console.log("branch name ", branch);
+            console.log("barnch ", branchesName[branch]);
+
+            const tblRow = document.createElement('tr');
+            const tblCellName = document.createElement('td');
+            const tblCellBarnch = document.createElement('td');
+            const tblBranchName = document.createTextNode(branch);
+            const tblBranchValue = document.createTextNode(branchesName[branch]);
+
+            //set table data
+            tblCellName.appendChild(tblBranchName);
+            tblCellBarnch.appendChild(tblBranchValue);
+            tblRow.appendChild(tblCellName);
+            tblRow.appendChild(tblCellBarnch);
+            table.appendChild(tblRow);
+
         }
-        // alert(branches[branch])
     }
 
 }
