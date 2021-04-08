@@ -1,19 +1,19 @@
-async function cbuService() {
-    const SCMURL = scmAPI('SonarQubeOpenViolationMonitor', '2021-03');
-    let commitData;
-    await fetch(SCMURL)
+async function vbuService() {
+    const violationURL = vioalionAPI('ChatApp', '2021-04');
+    let violationData;
+    await fetch(violationURL)
         .then(res => res.json())
-        .then(data => commitData = JSON.stringify(data));
+        .then(data => violationData = JSON.stringify(data));
 
-    // set CbU tile data
-    let jsonCommit = JSON.parse(commitData);
-    let userObj = jsonCommit[1];
+    // set violation tile data
+    let jsonViolation = JSON.parse(violationData);
+    let userObj = jsonViolation[1];
 
     //get table tag
-    const table = document.getElementById('tblCbU');
-    const commitAPILimitaion = document.getElementById('commitCbUAPILimitaion');
+    const table = document.getElementById('tblVbU');
     for (usersBranches in userObj) {
         let branchesName = userObj[usersBranches];
+
 
         for (branch in branchesName) {
             let userBranch = branchesName[branch];
@@ -31,28 +31,20 @@ async function cbuService() {
             table.appendChild(tblRowHeaderSpace);
 
             for (users in userBranch) {
-                // const tblRowHeader = document.createElement('tr');
                 const tblRow = document.createElement('tr');
-                // const tblHeaderBranch = document.createElement('th');
                 const tblCellName = document.createElement('td');
                 const tblCellValue = document.createElement('td');
-                // const tblCellHeader = document.createTextNode(branch);
                 const tblAuthorhName = document.createTextNode(users);
                 const tblAuthorValue = document.createTextNode(userBranch[users]);
 
                 //set table data
-                // tblHeaderBranch.appendChild(tblCellHeader);
                 tblCellName.appendChild(tblAuthorhName);
                 tblCellValue.appendChild(tblAuthorValue);
 
-                // tblRowHeader.appendChild(tblHeaderBranch);
                 tblRow.appendChild(tblCellName);
                 tblRow.appendChild(tblCellValue);
-                // table.appendChild(tblRowHeader);
                 table.appendChild(tblRow);
             }
         }
     }
-    commitAPILimitaion.innerHTML = '! Support Main branch only. API limitation';
-
 }

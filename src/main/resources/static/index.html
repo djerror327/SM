@@ -37,6 +37,14 @@
         </div>
         <div class="tile">
             <div class="tileHeader">
+                <h2>VbU</h2>
+            </div>
+            <div class="tileContent">
+                <table id="tblVbU"></table>
+            </div>
+        </div>
+        <div class="tile">
+            <div class="tileHeader">
                 <h2>Commits</h2>
                 <h3 id="commitAPILimitaion"></h3>
             </div>
@@ -53,104 +61,18 @@
                 <table id="tblCbU"></table>
             </div>
         </div>
-        <div class="tile">
+        <!-- <div class="tile">
             <div class="tileHeader">
                 <h2>VbU</h2>
             </div>
             <div class="tileContent">
-                <table>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdffgfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damiddan.hsgdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <!-- <div class="tile">
-            <div class="tileHeader">
-                <h2>CbU</h2>
-            </div>
-            <div class="tileContent">
-                <table>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                </table>
+                <table id="tblVbU"></table>
             </div>
         </div> -->
-
-
-        <!-- <button onclick="loadProjectList()">ProjectList</button>
-    <button onclick="loadSCMData()">SCM Data</button>
-    <button onclick="loadVialationData()">Violation data</button> -->
     </section>
 
     <script src="./js/service/ViolationTileService.js" type="text/javascript"></script>
+    <script src="./js/service/VbUService.js" type="text/javascript"></script>
     <script src="./js/service/CommitTileService.js" type="text/javascript"></script>
     <script src="./js/service/CbUService.js" type="text/javascript"></script>
     <script type="text/javascript" src="./js/service/ProjectService.js"></script>
@@ -163,6 +85,7 @@
 
         //set tile data
         violationTileService();
+        vbuService();
         commitTileService();
         cbuService();
     </script>
