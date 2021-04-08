@@ -18,7 +18,7 @@
         <span id="searchBoxSection">
             <input type="search" class="searchInputFiled" id="search" onkeyup="search()" placeholder="Search Project" />
             <select class="searchInputFiled" id="searchItem"></select>
-            <input type="month" id="datePicker"/>
+            <input id="datePicker" type="month"/>
             <button class="searchInputFiled">Search</button>
         </span>
     </header>
@@ -38,55 +38,19 @@
         <div class="tile">
             <div class="tileHeader">
                 <h2>Commits</h2>
+                <h3 id="commitAPILimitaion"></h3>
             </div>
             <div class="tileContent">
-                <table>
-                    <tr>
-                        <td>master</td>
-                        <td>800</td>
-                    </tr>
-                </table>
+                <table id="tblCommits"></table>
             </div>
         </div>
         <div class="tile">
             <div class="tileHeader">
                 <h2>CbU</h2>
+                <h3 id="commitCbUAPILimitaion"></h3>
             </div>
             <div class="tileContent">
-                <table>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                    <tr>
-                        <td>damidfgdfdan.hsgfsdfhg@optongdgdfgline.net</td>
-                        <td>47</td>
-                    </tr>
-                    <tr>
-                        <td>dalamb@sbcglobal.net</td>
-                        <td>30</td>
-                    </tr>
-                    <tr>
-                        <td>rwelty@outlook.com</td>
-                        <td>50</td>
-                    </tr>
-                </table>
+                <table id="tblCbU"></table>
             </div>
         </div>
         <div class="tile">
@@ -181,29 +145,27 @@
         </div> -->
 
 
-
-
         <!-- <button onclick="loadProjectList()">ProjectList</button>
     <button onclick="loadSCMData()">SCM Data</button>
     <button onclick="loadVialationData()">Violation data</button> -->
     </section>
 
-    <script type="text/javascript" src="./js/service/ViolationService.js"></script>
-    <script type="text/javascript" src="./js/service/SCMService.js"></script>
+    <script src="./js/service/ViolationTileService.js" type="text/javascript"></script>
+    <script src="./js/service/CommitTileService.js" type="text/javascript"></script>
+    <script src="./js/service/CbUService.js" type="text/javascript"></script>
     <script type="text/javascript" src="./js/service/ProjectService.js"></script>
     <script type="text/javascript" src="./js/api/API.js"></script>
     <script type="text/javascript" src="./js/SerchBox.js"></script>
     <script>
 
-        //load search box project at page loading
+        //load search box project data
         loadProjectList();
 
-        //testing
-        loadVialationData();
+        //set tile data
+        violationTileService();
+        commitTileService();
+        cbuService();
     </script>
 </body>
-
-
-
 
 </html>

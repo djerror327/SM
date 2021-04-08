@@ -1,4 +1,4 @@
-async function loadVialationData() {
+async function violationTileService() {
     const violationURL = vioalionAPI('SonarQubeOpenViolationMonitor', '2021-03');
     let violationData;
     await fetch(violationURL)
@@ -15,9 +15,6 @@ async function loadVialationData() {
         let branchesName = branchesObj[branches];
 
         for (branch in branchesName) {
-            console.log("branch name ", branch);
-            console.log("barnch ", branchesName[branch]);
-
             const tblRow = document.createElement('tr');
             const tblCellName = document.createElement('td');
             const tblCellBarnch = document.createElement('td');
