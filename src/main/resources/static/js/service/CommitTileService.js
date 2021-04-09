@@ -31,6 +31,10 @@ async function commitTileService(projectKey, date) {
         }
     }
     commitAPILimitaion.innerHTML = 'Support main branch only. API limitation !';
+
     //stop data loading animation
     checkTableEmpty();
+    //enable search button after data loading
+    commitsTileLoaded = true;
+    btnSearchCheckDisable();
 }

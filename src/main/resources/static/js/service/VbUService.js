@@ -52,4 +52,7 @@ async function vbuService(projectKey, date) {
     }
     //stop data loading animation
     checkTableEmpty();
+     //enable search button after data loading
+     VbUTileLoaded = true;
+     btnSearchCheckDisable();
 }
