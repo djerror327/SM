@@ -34,6 +34,8 @@ async function vbuService(projectKey, date) {
                 const tblRow = document.createElement('tr');
                 const tblCellName = document.createElement('td');
                 const tblCellValue = document.createElement('td');
+                //create a additional space
+                const tblAuthorSapce = document.createElement('td');
                 const tblAuthorhName = document.createTextNode(users);
                 const tblAuthorValue = document.createTextNode(userBranch[users]);
 
@@ -41,6 +43,7 @@ async function vbuService(projectKey, date) {
                 tblCellName.appendChild(tblAuthorhName);
                 tblCellValue.appendChild(tblAuthorValue);
 
+                tblRow.appendChild(tblAuthorSapce);
                 tblRow.appendChild(tblCellName);
                 tblRow.appendChild(tblCellValue);
                 table.appendChild(tblRow);

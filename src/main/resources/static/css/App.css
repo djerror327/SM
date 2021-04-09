@@ -29,8 +29,8 @@
     /* opacity: 0.5; */
     padding: .2cm;
     /* float: left; */
-    width: 9cm;
-    height: 9cm;
+    width: 9.5cm;
+    height: 9.5cm;
     border: thin #171717 solid;
     margin: .1cm;
     font-size: small;
@@ -56,14 +56,12 @@
     color: #010101;
     text-align: left;
     padding-left: 8px;
-
 }
 
 #AppTitle {
     /* display: inline; */
     /* position: absolute;  */
     padding-top: 0.6cm;
-
 }
 
 #searchBoxSection {
@@ -76,9 +74,10 @@
     padding-right: 8px;
 }
 
-#datePicker{
+#datePicker {
     width: 145px;
 }
+
 .searchInputFiled {
     /* width: 125px; */
     width: 150px;

@@ -22,6 +22,6 @@ function searchController() {
     commitTileService(dropDownValue, datePickerValue);
     cbuService(dropDownValue, datePickerValue);
 
-    //check table empty 
-    // checkTableEmpty(val);
+     //true == project scanned hide project not scanned text
+     projectNotScannedController(true);
 }

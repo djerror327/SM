@@ -34,7 +34,10 @@
                 <h2>Violations</h2>
             </div>
             <div class="tileContent">
-                <h2 id="violationTileLoading"></h2>
+                <center>
+                    <h3 class="projectNotScanTxt"></h3>
+                    <h2 id="violationTileLoading"></h2>
+                </center>
                 <table id="tblVioation"></table>
             </div>
         </div>
@@ -43,7 +46,10 @@
                 <h2>VbU</h2>
             </div>
             <div class="tileContent">
-                <h2 id="vbuTileLoading"></h2>
+                <center>
+                    <h3 class="projectNotScanTxt"></h3>
+                    <h2 id="vbuTileLoading"></h2>
+                </center>
                 <table id="tblVbU"></table>
             </div>
         </div>
@@ -53,7 +59,10 @@
                 <h3 id="commitAPILimitaion"></h3>
             </div>
             <div class="tileContent">
-                <h2 id="CommitsTileLoading"></h2>
+                <center>
+                    <h3 class="projectNotScanTxt"></h3>
+                    <h2 id="CommitsTileLoading"></h2>
+                </center>
                 <table id="tblCommits"></table>
             </div>
         </div>
@@ -63,7 +72,10 @@
                 <h3 id="commitCbUAPILimitaion"></h3>
             </div>
             <div class="tileContent">
-                <h2 id="cbuTileLoading"></h2>
+                <center>
+                    <h3 class="projectNotScanTxt"></h3>
+                    <h2 id="cbuTileLoading"></h2>
+                </center>
                 <table id="tblCbU"></table>
             </div>
         </div>
@@ -73,12 +85,17 @@
     <script src="./js/service/VbUService.js" type="text/javascript"></script>
     <script src="./js/service/CommitTileService.js" type="text/javascript"></script>
     <script src="./js/service/CbUService.js" type="text/javascript"></script>
+    <script src="./js/controller/ProjectNotScannedTextController.js" type="text/javascript"></script>
     <script type="text/javascript" src="./js/service/ProjectService.js"></script>
     <script type="text/javascript" src="./js/api/API.js"></script>
     <script type="text/javascript" src="./js/SerchBox.js"></script>
     <script>
         //set default value to the date picker
         document.getElementById('datePicker').valueAsDate = new Date();
+        //set project not scanned text at page loading
+        //false == not scanned
+        projectNotScannedController(false);
+
         //load search box project data
         loadProjectList();
     </script>
