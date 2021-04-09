@@ -13,7 +13,7 @@ function projectNotScannedController(value) {
     } else {
         const projectNotScanTxtList = document.getElementsByClassName('projectNotScanTxt');
         for (element in projectNotScanTxtList) {
-            projectNotScanTxtList[element].innerHTML = "Project Not Scanned !";
+            projectNotScanTxtList[element].innerHTML = "Project not scanned !";
         }
     }
 }

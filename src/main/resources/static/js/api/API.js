@@ -1,5 +1,5 @@
-const hostName = "http://localhost:" + 8080;
-// const hostName = window.location.protocol + "//" + window.location.host;
+// const hostName = "http://localhost:" + 8080;
+const hostName = window.location.protocol + "//" + window.location.host;
 
 function projectAPI() {
     return hostName + "/v1/projects";

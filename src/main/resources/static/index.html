@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/controller/SearchController.js"></script>
     <script src="./js/controller/CheckTableEmptyController.js"></script>
-    <title>Title</title>
+    <title>S-Monitor</title>
 </head>
 
 <body class="body">
@@ -23,7 +23,7 @@
             <input class="searchInputFiled" id="search" onkeyup="search()" placeholder="Search Project" type="search"/>
             <select class="searchInputFiled" id="searchItem"></select>
             <input id="datePicker" type="month"/>
-            <button class="searchInputFiled" onclick="searchController()">Search</button>
+            <button class="searchInputFiled" id="btnSearch" onclick="searchController()">Search</button>
         </span>
     </header>
     <section id="section">

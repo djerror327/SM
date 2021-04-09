@@ -4,14 +4,20 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-#header {
-    /* border-color: white; */
-    /* border-style: solid; */
+body {
+    background-image: url("../img/background.jpg");
+    /* background-repeat: no-repeat; */
+    /* background-color: #cccccc; */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
 }
 
-#section {
-    /* border-color: white;
-    border-style: solid; */
+#btnSearch {
+    background-color: #fafafa;
+    color: #171717;
+    opacity: 0.9;
 }
 
 .tile {
@@ -26,7 +32,7 @@
     /* color: white; */
     /* text-align: center; */
     /* margin: 6px; */
-    /* opacity: 0.5; */
+    opacity: 0.9;
     padding: .2cm;
     /* float: left; */
     width: 9.5cm;
@@ -50,12 +56,16 @@
 }
 
 #header {
-    background-color: #ffdd2a;
+    /* background-color: #ffdd2a; */
+    background-color: #171717;
     /* height: 70px; */
-    height: 2.2cm;
-    color: #010101;
+    height: 2.4cm;
+    /* color: #010101; */
+    color: #fafafa;
     text-align: left;
     padding-left: 8px;
+    opacity: 0.9;
+    border-radius: 5px;
 }
 
 #AppTitle {
@@ -76,11 +86,17 @@
 
 #datePicker {
     width: 145px;
+    border-radius: 5px;
+    height: 0.67cm;
+    opacity: 0.9;
 }
 
 .searchInputFiled {
     /* width: 125px; */
-    width: 150px;
+    width: 170px;
+    border-radius: 5px;
+    height: 0.8cm;
+    opacity: 0.9;
 }
 
 #projectName {
