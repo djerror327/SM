@@ -8,7 +8,7 @@ function searchController() {
     document.getElementById('commitAPILimitaion').innerHTML = "";
     document.getElementById('commitCbUAPILimitaion').innerHTML = "";
 
-    //check table empty 
+    //check table empty and set data loading animation
     checkTableEmpty();
 
     let dropDown = document.getElementById('searchItem');
@@ -16,12 +16,14 @@ function searchController() {
 
     var dropDownValue = dropDown.options[dropDown.selectedIndex].text;
 
+    //set project name
+    document.getElementById('projectName').innerHTML = "Project : " + dropDownValue;
     //set tile data
     let val = violationTileService(dropDownValue, datePickerValue);
     vbuService(dropDownValue, datePickerValue);
     commitTileService(dropDownValue, datePickerValue);
     cbuService(dropDownValue, datePickerValue);
 
-     //true == project scanned hide project not scanned text
-     projectNotScannedController(true);
+    //true == project scanned hide project not scanned text
+    projectNotScannedController(true);
 }

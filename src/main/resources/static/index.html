@@ -8,6 +8,8 @@
     <meta name="HandheldFriendly" content="true">
     <link rel="stylesheet" href="./css/App.css">
     </link>
+    <link href="./css/ToolTip.css" rel="stylesheet">
+    </link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/controller/SearchController.js"></script>
     <script src="./js/controller/CheckTableEmptyController.js"></script>
@@ -26,12 +28,17 @@
     </header>
     <section id="section">
         <h2 id="a"></h2>
-        <div id="projectName">
-            <h3>Project - SonarQubeOpenViolationMonitor</h3>
+        <div>
+            <h2 id="projectName"></h2>
         </div>
         <div class="tile">
             <div class="tileHeader">
-                <h2>Violations</h2>
+                <br/>
+                <br/>
+                <span class="tooltip">
+                    <h2>Violations</h2>
+                    <span class="tooltiptext">Violations in branches</span>
+                </span>
             </div>
             <div class="tileContent">
                 <center>
@@ -43,7 +50,12 @@
         </div>
         <div class="tile">
             <div class="tileHeader">
-                <h2>VbU</h2>
+                <br/>
+                <br/>
+                <span class="tooltip">
+                    <h2>VbU</h2>
+                    <span class="tooltiptext">Violations by User</span>
+                </span>
             </div>
             <div class="tileContent">
                 <center>
@@ -55,7 +67,12 @@
         </div>
         <div class="tile">
             <div class="tileHeader">
-                <h2>Commits</h2>
+                <br/>
+                <br/>
+                <span class="tooltip">
+                    <h2>Commits</h2>
+                    <span class="tooltiptext">Commits in branches</span>
+                </span>
                 <h3 id="commitAPILimitaion"></h3>
             </div>
             <div class="tileContent">
@@ -68,7 +85,12 @@
         </div>
         <div class="tile">
             <div class="tileHeader">
-                <h2>CbU</h2>
+                <br/>
+                <br/>
+                <span class="tooltip">
+                    <h2>CbU</h2>
+                    <span class="tooltiptext">Commits By User</span>
+                </span>
                 <h3 id="commitCbUAPILimitaion"></h3>
             </div>
             <div class="tileContent">
