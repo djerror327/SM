@@ -4,7 +4,7 @@ function search() {
     objArr.forEach((value, index) => {
         console.log(value);
         if (value == search.value) {
-            $('#searchItem option:contains(' + value + ')').prop({selected: true});
+            $('#searchItem option:contains(' + value + ')').prop({ selected: true });
         }
     });
 }

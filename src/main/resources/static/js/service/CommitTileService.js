@@ -30,6 +30,7 @@ async function commitTileService(projectKey, date) {
             table.appendChild(tblRow);
         }
     }
-    commitAPILimitaion.innerHTML='! Support Main branch only. API limitation';
-
+    commitAPILimitaion.innerHTML = '! Support Main branch only. API limitation';
+    //stop data loading animation
+    checkTableEmpty();
 }

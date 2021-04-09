@@ -48,5 +48,6 @@ async function cbuService(projectKey, date) {
         }
     }
     commitAPILimitaion.innerHTML = '! Support Main branch only. API limitation';
-
+    //stop data loading animation
+    checkTableEmpty();
 }

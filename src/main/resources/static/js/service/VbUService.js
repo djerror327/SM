@@ -47,4 +47,6 @@ async function vbuService(projectKey, date) {
             }
         }
     }
+    //stop data loading animation
+    checkTableEmpty();
 }

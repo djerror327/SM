@@ -10,6 +10,7 @@
     </link>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="./js/controller/SearchController.js"></script>
+    <script src="./js/controller/CheckTableEmptyController.js"></script>
     <title>Title</title>
 </head>
 
@@ -17,7 +18,7 @@
     <header id="header">
         <h1 id="AppTitle">S-Monitor</h1>
         <span id="searchBoxSection">
-            <input type="search" class="searchInputFiled" id="search" onkeyup="search()" placeholder="Search Project"/>
+            <input class="searchInputFiled" id="search" onkeyup="search()" placeholder="Search Project" type="search"/>
             <select class="searchInputFiled" id="searchItem"></select>
             <input id="datePicker" type="month"/>
             <button class="searchInputFiled" onclick="searchController()">Search</button>
@@ -33,6 +34,7 @@
                 <h2>Violations</h2>
             </div>
             <div class="tileContent">
+                <h2 id="violationTileLoading"></h2>
                 <table id="tblVioation"></table>
             </div>
         </div>
@@ -41,6 +43,7 @@
                 <h2>VbU</h2>
             </div>
             <div class="tileContent">
+                <h2 id="vbuTileLoading"></h2>
                 <table id="tblVbU"></table>
             </div>
         </div>
@@ -50,6 +53,7 @@
                 <h3 id="commitAPILimitaion"></h3>
             </div>
             <div class="tileContent">
+                <h2 id="CommitsTileLoading"></h2>
                 <table id="tblCommits"></table>
             </div>
         </div>
@@ -59,6 +63,7 @@
                 <h3 id="commitCbUAPILimitaion"></h3>
             </div>
             <div class="tileContent">
+                <h2 id="cbuTileLoading"></h2>
                 <table id="tblCbU"></table>
             </div>
         </div>

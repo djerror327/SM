@@ -30,5 +30,6 @@ async function violationTileService(projectKey, date) {
 
         }
     }
-
+    //stop data loading animation
+    checkTableEmpty();
 }
