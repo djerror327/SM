@@ -12,12 +12,12 @@ body {
     height: 100%;
 }
 
-.loadingGif{
+.loadingGif {
     position: absolute;
     z-index: 1;
 }
 
-.lodingGifContainer{
+.lodingGifContainer {
     padding-right: 200px;
 }
 
