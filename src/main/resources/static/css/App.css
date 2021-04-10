@@ -6,12 +6,19 @@
 
 body {
     background-image: url("../img/background.jpg");
-    /* background-repeat: no-repeat; */
-    /* background-color: #cccccc; */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     height: 100%;
+}
+
+.loadingGif{
+    position: absolute;
+    z-index: 1;
+}
+
+.lodingGifContainer{
+    padding-right: 200px;
 }
 
 #btnSearch {
@@ -22,19 +29,10 @@ body {
 
 .tile {
     float: left;
-    /* border-style: solid;
-    border-width: thin; */
-    /* border-color: white; */
     border-radius: 15px;
-    /* height: 250px; */
-    /* width: 250px; */
     background-color: #171717;
-    /* color: white; */
-    /* text-align: center; */
-    /* margin: 6px; */
     opacity: 0.9;
     padding: .2cm;
-    /* float: left; */
     width: 9.5cm;
     height: 9.5cm;
     border: thin #171717 solid;
@@ -52,15 +50,11 @@ body {
 .tileContent {
     text-align: left;
     padding: 5px;
-    /* font-weight:bold; */
 }
 
 #header {
-    /* background-color: #ffdd2a; */
     background-color: #171717;
-    /* height: 70px; */
     height: 2.4cm;
-    /* color: #010101; */
     color: #fafafa;
     text-align: left;
     padding-left: 8px;
@@ -69,8 +63,6 @@ body {
 }
 
 #AppTitle {
-    /* display: inline; */
-    /* position: absolute;  */
     padding-top: 0.6cm;
 }
 
@@ -80,7 +72,6 @@ body {
     right: 10px;
     float: left;
     padding-left: 13px;
-    /* padding-top: 5px; */
     padding-right: 8px;
 }
 
@@ -92,7 +83,6 @@ body {
 }
 
 .searchInputFiled {
-    /* width: 125px; */
     width: 170px;
     border-radius: 5px;
     height: 0.8cm;
