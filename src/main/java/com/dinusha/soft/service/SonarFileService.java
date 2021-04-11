@@ -22,6 +22,12 @@ public class SonarFileService {
     private static final Logger logger = Logger.getLogger(SonarFileService.class);
 
     @Autowired
+    private Paginate paginate;
+    @Autowired
+    private JsonUtil jsonUtil;
+    @Autowired
+    private Client client;
+    @Autowired
     private SonarAuthHeaderService sonarAuthHeaderService;
     @Autowired
     private BranchService branchService;
@@ -34,12 +40,12 @@ public class SonarFileService {
 
         logger.info("Reading all files of SonarQube branch list");
         for (String branch : branchesList) {
-            String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc");
+            String pagingData = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc");
 
-            JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
+            JSONObject pageObj = jsonUtil.jsonObject.apply(pagingData);
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
-            long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
+            long recursionCount = paginate.recursionCount.applyAsLong(paging);
 
             //collect all file paths for particular branch
             List<String> files = new ArrayList<>();
@@ -47,8 +53,8 @@ public class SonarFileService {
             //loop all pages and collect violation data
             logger.debug("started to paginate");
             for (int page = 1; page <= recursionCount; page++) {
-                String fileObj = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
-                JSONObject jsonFiles = JsonUtil.JSON_OBJECT.apply(fileObj);
+                String fileObj = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
+                JSONObject jsonFiles = jsonUtil.jsonObject.apply(fileObj);
                 JSONArray components = (JSONArray) jsonFiles.get("components");
                 logger.debug("Reading components");
                 for (Object component : components) {

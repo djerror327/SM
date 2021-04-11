@@ -5,13 +5,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
-public interface JsonUtil {
-    Logger LOGGER = Logger.getLogger(JsonUtil.class);
-    Function<String, JSONObject> JSON_OBJECT = value -> {
-        LOGGER.debug("Passing to JSON Object");
+@Component
+public class JsonUtil {
+    Logger logger = Logger.getLogger(JsonUtil.class);
+    public final Function<String, JSONObject> jsonObject = value -> {
+        logger.debug("Passing to JSON Object");
         JSONParser parser = new JSONParser();
         JSONObject object = null;
         try {
@@ -22,8 +24,8 @@ public interface JsonUtil {
         return object;
     };
 
-    Function<String, JSONArray> JSON_ARRAY = value -> {
-        LOGGER.debug("Passing to JSON Array");
+    public final Function<String, JSONArray> jsonArray = value -> {
+        logger.debug("Passing to JSON Array");
         JSONParser parser = new JSONParser();
         JSONArray jsonArray = null;
         try {

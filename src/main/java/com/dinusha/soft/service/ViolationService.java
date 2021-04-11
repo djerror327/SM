@@ -20,6 +20,12 @@ public class ViolationService {
     private static final Logger logger = Logger.getLogger(ViolationService.class);
 
     @Autowired
+    private Paginate paginate;
+    @Autowired
+    private JsonUtil jsonUtil;
+    @Autowired
+    private Client client;
+    @Autowired
     private SonarAuthHeaderService sonarAuthHeaderService;
     @Autowired
     private BranchService branchService;
@@ -46,18 +52,18 @@ public class ViolationService {
             violationCount = 0;
             //paging related part
             logger.debug("Reading paging sizes");
-            String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
-            JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
+            String pagingData = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
+            JSONObject pageObj = jsonUtil.jsonObject.apply(pagingData);
 
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
-            long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
+            long recursionCount = paginate.recursionCount.applyAsLong(paging);
 
             //loop all pages and collect violation data
             logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
-                String violationObj = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
-                JSONObject jsonViolation = JsonUtil.JSON_OBJECT.apply(violationObj);
+                String violationObj = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
+                JSONObject jsonViolation = jsonUtil.jsonObject.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
                 for (Object issue : issueArr) {
                     JSONObject issueObj = (JSONObject) issue;

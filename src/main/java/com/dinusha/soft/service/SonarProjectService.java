@@ -18,6 +18,13 @@ import java.util.function.Supplier;
 public class SonarProjectService {
 
     private static final Logger logger = Logger.getLogger(SonarProjectService.class);
+
+    @Autowired
+    private Paginate paginate;
+    @Autowired
+    private JsonUtil jsonUtil;
+    @Autowired
+    private Client client;
     @Autowired
     private SonarAuthHeaderService sonarAuthHeaderService;
     @Value("${sonar.host}")
@@ -27,19 +34,19 @@ public class SonarProjectService {
     public final Supplier<List<String>> getProjects = () -> {
         //paging related part
         logger.debug("Reading paging sizes");
-        String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500&");
-        JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
+        String pagingData = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500");
+        JSONObject pageObj = jsonUtil.jsonObject.apply(pagingData);
 
         //calculate paging count
         JSONObject paging = (JSONObject) pageObj.get("paging");
-        long recursionCount = Paginate.RECURSION_COUNT.applyAsLong(paging);
+        long recursionCount = paginate.recursionCount.applyAsLong(paging);
 
         ArrayList<String> projectKeys = new ArrayList<>();
         //loop all pages and collect violation data
         logger.info("Reading project list from SonarQube");
         for (int page = 1; page <= recursionCount; page++) {
-            String projects = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500&p=" + page + "");
-            JSONObject jsonProjects = JsonUtil.JSON_OBJECT.apply(projects);
+            String projects = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/projects/search?ps=500&p=" + page + "");
+            JSONObject jsonProjects = jsonUtil.jsonObject.apply(projects);
             JSONArray issueArr = (JSONArray) jsonProjects.get("components");
             for (Object project : issueArr) {
                 JSONObject projectObj = (JSONObject) project;

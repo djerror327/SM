@@ -17,6 +17,10 @@ public class SCMService {
     private static final Logger logger = Logger.getLogger(SCMService.class);
 
     @Autowired
+    private JsonUtil jsonUtil;
+    @Autowired
+    private Client client;
+    @Autowired
     private SonarAuthHeaderService sonarAuthHeaderService;
     @Autowired
     private SonarFileService sonarFileService;
@@ -37,8 +41,8 @@ public class SCMService {
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
             for (String src : branch.getValue()) {
                 logger.debug("Reading sources for in branch : " + branch.getKey() + " : " + src);
-                String commits = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/sources/scm?key=" + projectKey + ":" + src + "");
-                JSONObject jsonCommits = JsonUtil.JSON_OBJECT.apply(commits);
+                String commits = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/sources/scm?key=" + projectKey + ":" + src + "");
+                JSONObject jsonCommits = jsonUtil.jsonObject.apply(commits);
                 JSONArray scmArr = (JSONArray) jsonCommits.get("scm");
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {

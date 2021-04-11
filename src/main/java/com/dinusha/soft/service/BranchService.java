@@ -17,6 +17,11 @@ import java.util.function.Function;
 public class BranchService {
 
     private final Logger logger = Logger.getLogger(BranchService.class);
+
+    @Autowired
+    private JsonUtil jsonUtil;
+    @Autowired
+    private Client client;
     @Autowired
     private SonarAuthHeaderService sonarAuthHeaderService;
     @Value("${sonar.host}")
@@ -28,7 +33,7 @@ public class BranchService {
 
         logger.debug("Retrieving branch data from API");
 //        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply(host + "api/project_branches/list?project=" + key));
-        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
+        JSONObject branches = jsonUtil.jsonObject.apply(client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
         JSONArray branchList = (JSONArray) branches.get("branches");
         List<String> list = new ArrayList<>();
         branchList.forEach(payload -> list.add(((JSONObject) payload).get("name").toString()));
