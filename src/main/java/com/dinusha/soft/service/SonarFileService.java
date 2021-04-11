@@ -20,6 +20,9 @@ import java.util.function.Function;
 public class SonarFileService {
 
     private static final Logger logger = Logger.getLogger(SonarFileService.class);
+
+    @Autowired
+    private SonarAuthHeaderService sonarAuthHeaderService;
     @Autowired
     private BranchService branchService;
     @Value("${sonar.host}")
@@ -31,7 +34,7 @@ public class SonarFileService {
 
         logger.info("Reading all files of SonarQube branch list");
         for (String branch : branchesList) {
-            String pagingData = Client.GET.apply(host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc");
+            String pagingData = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc");
 
             JSONObject pageObj = JsonUtil.JSON_OBJECT.apply(pagingData);
             //calculate paging count
@@ -44,7 +47,7 @@ public class SonarFileService {
             //loop all pages and collect violation data
             logger.debug("started to paginate");
             for (int page = 1; page <= recursionCount; page++) {
-                String fileObj = Client.GET.apply(host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
+                String fileObj = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
                 JSONObject jsonFiles = JsonUtil.JSON_OBJECT.apply(fileObj);
                 JSONArray components = (JSONArray) jsonFiles.get("components");
                 logger.debug("Reading components");

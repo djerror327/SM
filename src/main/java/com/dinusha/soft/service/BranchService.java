@@ -5,6 +5,7 @@ import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,8 @@ import java.util.function.Function;
 public class BranchService {
 
     private final Logger logger = Logger.getLogger(BranchService.class);
-
+    @Autowired
+    private SonarAuthHeaderService sonarAuthHeaderService;
     @Value("${sonar.host}")
     private String host;
 
@@ -25,8 +27,8 @@ public class BranchService {
     public final Function<String, List<String>> getBranches = key -> {
 
         logger.debug("Retrieving branch data from API");
-        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply(host
-                + "api/project_branches/list?project=" + key));
+//        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply(host + "api/project_branches/list?project=" + key));
+        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
         JSONArray branchList = (JSONArray) branches.get("branches");
         List<String> list = new ArrayList<>();
         branchList.forEach(payload -> list.add(((JSONObject) payload).get("name").toString()));

@@ -15,6 +15,9 @@ import java.util.function.BiFunction;
 @Service
 public class SCMService {
     private static final Logger logger = Logger.getLogger(SCMService.class);
+
+    @Autowired
+    private SonarAuthHeaderService sonarAuthHeaderService;
     @Autowired
     private SonarFileService sonarFileService;
     @Value("${sonar.host}")
@@ -34,7 +37,7 @@ public class SCMService {
         for (Map.Entry<String, List<String>> branch : sonarSources.entrySet()) {
             for (String src : branch.getValue()) {
                 logger.debug("Reading sources for in branch : " + branch.getKey() + " : " + src);
-                String commits = Client.GET.apply(host + "api/sources/scm?key=" + projectKey + ":" + src + "");
+                String commits = Client.GET_WITH_AUTH_HEADER.apply(sonarAuthHeaderService.authHeader.get(), host + "api/sources/scm?key=" + projectKey + ":" + src + "");
                 JSONObject jsonCommits = JsonUtil.JSON_OBJECT.apply(commits);
                 JSONArray scmArr = (JSONArray) jsonCommits.get("scm");
                 if (Objects.nonNull(scmArr)) {
