@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 @Component
 public class JsonUtil {
-    Logger logger = Logger.getLogger(JsonUtil.class);
+    private static final Logger logger = Logger.getLogger(JsonUtil.class);
     public final Function<String, JSONObject> jsonObject = value -> {
         logger.debug("Passing to JSON Object");
         JSONParser parser = new JSONParser();
@@ -27,12 +27,12 @@ public class JsonUtil {
     public final Function<String, JSONArray> jsonArray = value -> {
         logger.debug("Passing to JSON Array");
         JSONParser parser = new JSONParser();
-        JSONArray jsonArray = null;
+        JSONArray jsonArr = null;
         try {
-            jsonArray = (JSONArray) parser.parse(value);
+            jsonArr = (JSONArray) parser.parse(value);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return jsonArray;
+        return jsonArr;
     };
 }
