@@ -19,7 +19,7 @@ public class JsonUtil {
         try {
             object = (JSONObject) parser.parse(value);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
         return object;
     };
@@ -31,7 +31,7 @@ public class JsonUtil {
         try {
             jsonArr = (JSONArray) parser.parse(value);
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
         return jsonArr;
     };

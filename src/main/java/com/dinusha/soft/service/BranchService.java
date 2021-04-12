@@ -1,6 +1,7 @@
 package com.dinusha.soft.service;
 
 import com.dinusha.soft.utills.JsonUtil;
+import com.dinusha.soft.utills.SonarAuthHeaderService;
 import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -32,7 +33,6 @@ public class BranchService {
     public final Function<String, List<String>> getBranches = key -> {
 
         logger.debug("Retrieving branch data from API");
-//        JSONObject branches = JsonUtil.JSON_OBJECT.apply(Client.GET.apply(host + "api/project_branches/list?project=" + key));
         JSONObject branches = jsonUtil.jsonObject.apply(client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
         JSONArray branchList = (JSONArray) branches.get("branches");
         List<String> list = new ArrayList<>();

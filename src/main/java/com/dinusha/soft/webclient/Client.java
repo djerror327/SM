@@ -7,7 +7,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
@@ -17,44 +16,30 @@ import java.util.function.BinaryOperator;
 @Configuration
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class);
+    private static final String LINE = "=====================================";
     public final BinaryOperator<String> getWithAuthHeader = (authHeader, uri) -> {
+
         logger.info("GET -> " + uri);
-        String result = null;
-        CloseableHttpClient client = HttpClients.createDefault();
-        HttpGet request = new HttpGet(uri);
-        request.setHeader("Authorization", authHeader);
-        CloseableHttpResponse response = null;
-        try {
-            response = client.execute(request);
+        try (CloseableHttpClient client = HttpClients.createDefault()) {
+            HttpGet httpGet = new HttpGet(uri);
+            httpGet.setHeader("Authorization", authHeader);
+            try (CloseableHttpResponse response = client.execute(httpGet)) {
+
+                HttpEntity entity = Objects.requireNonNull(response).getEntity();
+                if (response.getStatusLine().getStatusCode() == 200) {
+                    logger.info(LINE);
+                    logger.info("Status Code : " + response.getStatusLine().getStatusCode());
+                    logger.info(LINE);
+                } else {
+                    logger.error(LINE);
+                    logger.error("Status Code : " + response.getStatusLine().getStatusCode());
+                    logger.error(LINE);
+                }
+                return EntityUtils.toString(entity);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getStackTrace());
         }
-        HttpEntity entity = Objects.requireNonNull(response).getEntity();
-        try {
-            result = EntityUtils.toString(entity);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
+        return null;
     };
-    @Value("${web.client.retry.count}")
-    private String retryCount;
-
-
-    //    public final UnaryOperator<String> get = url -> {
-////        WebClient webClient = WebClient.create();
-//        logger.info("GET -> " + url);
-//        return Objects.requireNonNull(
-//                webClientBuilder()
-//                        .build()
-//                        .get()
-//                        .uri(url)
-//                        .exchange().block())
-//                .bodyToMono(String.class)
-//                .retryWhen(Retry.fixedDelay(Integer.parseInt(retryCount), Duration.ofMillis(Integer.parseInt(retryDelay))))
-//                .block()
-//                ;
-//    };
-    @Value("${web.client.retry.delay}")
-    private String retryDelay;
 }
