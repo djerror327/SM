@@ -16,7 +16,7 @@ import java.util.function.BinaryOperator;
 @Configuration
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class);
-    private static final String LINE = "=====================================";
+    private static final String LINE = "======================";
     public final BinaryOperator<String> getWithAuthHeader = (authHeader, uri) -> {
 
         logger.info("GET -> " + uri);
