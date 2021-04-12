@@ -31,9 +31,9 @@ public class Client {
                     logger.info("Status Code : " + response.getStatusLine().getStatusCode());
                     logger.info(LINE);
                 } else {
-                    logger.error(LINE);
-                    logger.error("Status Code : " + response.getStatusLine().getStatusCode());
-                    logger.error(LINE);
+                    logger.warn(LINE);
+                    logger.warn("Status Code : " + response.getStatusLine().getStatusCode());
+                    logger.warn(LINE);
                 }
                 return EntityUtils.toString(entity);
             }
