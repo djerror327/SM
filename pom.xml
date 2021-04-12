@@ -56,6 +56,65 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.9.RELEASE</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+                                <!-- main application -->
+                                <copy file="${basedir}/target/${project.artifactId}-${project.version}.jar"
+                                      todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/start.bat" todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/start.sh" todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/src/main/resources/application.properties"
+                                      todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/src/main/resources/log4j.properties"
+                                      todir="${basedir}/deploy/S-Monitor"/>
+
+                                <!-- docker application-->
+                                <!--                                <copy file="${basedir}/docker-compose.yml"-->
+                                <!--                                      todir="${basedir}/deploy/cluster-resource-monitor"/>-->
+                                <!--                                <copy file="${basedir}/docker-start.sh"-->
+                                <!--                                      todir="${basedir}/deploy/cluster-resource-monitor"/>-->
+                                <!--                                <copy file="${basedir}/docker-stop.sh"-->
+                                <!--                                      todir="${basedir}/deploy/cluster-resource-monitor"/>-->
+                                <!--                                <copy file="${basedir}/Dockerfile"-->
+                                <!--                                      todir="${basedir}/deploy/cluster-resource-monitor"/>-->
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${basedir}/deploy/</directory>
+                            <includes>
+                                <include>**</include>
+                            </includes>
+                            <!--                            <excludes>-->
+                            <!--                                <exclude>**/important.log</exclude>-->
+                            <!--                                <exclude>**/another-important.log</exclude>-->
+                            <!--                            </excludes>-->
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
             </plugin>
         </plugins>
     </build>
