@@ -1,5 +1,6 @@
 package com.dinusha.soft.controller;
 
+import com.dinusha.soft.cache.SonarCache;
 import com.dinusha.soft.service.SCMService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,14 @@ public class SCMController {
     private static final Logger logger = Logger.getLogger(SCMController.class);
     @Autowired
     private SCMService scmService;
+    @Autowired
+    private SonarCache sonarCache;
 
     @GetMapping("/v1/scm/commits/{projectKey}/{date}")
     public List<Object> getCommits(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/scm/commits/" + projectKey + "/" + date);
-        return scmService.getCommits.apply(projectKey, date);
+        sonarCache.createSCMCache(projectKey, date);
+//        return scmService.getCommits.apply(projectKey, date);
+        return null;
     }
 }

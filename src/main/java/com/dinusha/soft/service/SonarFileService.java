@@ -43,7 +43,7 @@ public class SonarFileService {
         for (String branch : branchesList) {
             String pagingData = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc");
 
-            JSONObject pageObj = jsonUtil.jsonObject.apply(pagingData);
+            JSONObject pageObj = jsonUtil.stringToJsonObject.apply(pagingData);
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
             long recursionCount = paginate.recursionCount.applyAsLong(paging);
@@ -55,7 +55,7 @@ public class SonarFileService {
             logger.debug("started to paginate");
             for (int page = 1; page <= recursionCount; page++) {
                 String fileObj = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/measures/component_tree?ps=500&component=" + projectKey + "&branch=" + branch + "&metricKeys=ncloc&p=" + page + "");
-                JSONObject jsonFiles = jsonUtil.jsonObject.apply(fileObj);
+                JSONObject jsonFiles = jsonUtil.stringToJsonObject.apply(fileObj);
                 JSONArray components = (JSONArray) jsonFiles.get("components");
                 logger.debug("Reading components");
                 for (Object component : components) {

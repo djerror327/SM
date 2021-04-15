@@ -7,12 +7,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.Function;
 
 @Component
 public class JsonUtil {
     private static final Logger logger = Logger.getLogger(JsonUtil.class);
-    public final Function<String, JSONObject> jsonObject = value -> {
+    public final Function<String, JSONObject> stringToJsonObject = value -> {
         logger.debug("Passing to JSON Object");
         JSONParser parser = new JSONParser();
         JSONObject object = null;
@@ -24,7 +25,7 @@ public class JsonUtil {
         return object;
     };
 
-    public final Function<String, JSONArray> jsonArray = value -> {
+    public final Function<String, JSONArray> stringToJsonArray = value -> {
         logger.debug("Passing to JSON Array");
         JSONParser parser = new JSONParser();
         JSONArray jsonArr = null;
@@ -34,5 +35,15 @@ public class JsonUtil {
             logger.error(e.getStackTrace());
         }
         return jsonArr;
+    };
+
+    public final Function<List<Object>, String> listToJsonStringArray = value -> {
+        logger.debug("Passing List to Json String Array");
+        return JSONArray.toJSONString(value);
+    };
+
+    public final Function<List<Object>, JSONArray> listToJsonArray = value -> {
+        logger.debug("Passing List to Json Array");
+        return stringToJsonArray.apply(JSONArray.toJSONString(value));
     };
 }

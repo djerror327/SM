@@ -1,5 +1,6 @@
 package com.dinusha.soft.controller;
 
+import com.dinusha.soft.cache.SonarCache;
 import com.dinusha.soft.service.ViolationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,14 @@ public class ViolationController {
     private static final Logger logger = Logger.getLogger(ViolationController.class);
     @Autowired
     private ViolationService violationService;
+    @Autowired
+    private SonarCache sonarCache;
 
     @GetMapping("/v1/violations/{projectKey}/{date}")
     public List<Object> getViolations(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/violations/" + projectKey + "/" + date);
-        return violationService.getViolation.apply(projectKey, date);
+        sonarCache.createViolationCache(projectKey, date);
+//        return violationService.getViolation.apply(projectKey, date);
+        return null;
     }
 }

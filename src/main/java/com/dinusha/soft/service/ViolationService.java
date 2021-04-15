@@ -54,7 +54,7 @@ public class ViolationService {
             //paging related part
             logger.debug("Reading paging sizes");
             String pagingData = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500");
-            JSONObject pageObj = jsonUtil.jsonObject.apply(pagingData);
+            JSONObject pageObj = jsonUtil.stringToJsonObject.apply(pagingData);
 
             //calculate paging count
             JSONObject paging = (JSONObject) pageObj.get("paging");
@@ -64,7 +64,7 @@ public class ViolationService {
             logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
                 String violationObj = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
-                JSONObject jsonViolation = jsonUtil.jsonObject.apply(violationObj);
+                JSONObject jsonViolation = jsonUtil.stringToJsonObject.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
                 for (Object issue : issueArr) {
                     JSONObject issueObj = (JSONObject) issue;

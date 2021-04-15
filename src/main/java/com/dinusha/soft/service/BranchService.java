@@ -33,7 +33,7 @@ public class BranchService {
     public final Function<String, List<String>> getBranches = key -> {
 
         logger.debug("Retrieving branch data from API");
-        JSONObject branches = jsonUtil.jsonObject.apply(client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
+        JSONObject branches = jsonUtil.stringToJsonObject.apply(client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/project_branches/list?project=" + key));
         JSONArray branchList = (JSONArray) branches.get("branches");
         List<String> list = new ArrayList<>();
         branchList.forEach(payload -> list.add(((JSONObject) payload).get("name").toString()));

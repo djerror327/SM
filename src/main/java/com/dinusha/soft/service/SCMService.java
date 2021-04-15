@@ -43,7 +43,7 @@ public class SCMService {
             for (String src : branch.getValue()) {
                 logger.debug("Reading sources for in branch : " + branch.getKey() + " : " + src);
                 String commits = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/sources/scm?key=" + projectKey + ":" + src + "");
-                JSONObject jsonCommits = jsonUtil.jsonObject.apply(commits);
+                JSONObject jsonCommits = jsonUtil.stringToJsonObject.apply(commits);
                 JSONArray scmArr = (JSONArray) jsonCommits.get("scm");
                 if (Objects.nonNull(scmArr)) {
                     for (Object scmData : scmArr) {
