@@ -8,6 +8,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
@@ -45,5 +46,11 @@ public class JsonUtil {
     public final Function<List<Object>, JSONArray> listToJsonArray = value -> {
         logger.debug("Passing List to Json Array");
         return stringToJsonArray.apply(JSONArray.toJSONString(value));
+    };
+
+    @SuppressWarnings("rawtypes")
+    public final Function<Map, JSONObject> mapToJsonObject = value -> {
+        logger.debug("Passing Map to Json Object");
+        return new JSONObject(value);
     };
 }

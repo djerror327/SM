@@ -10,8 +10,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.function.Supplier;
 
 @Configuration
-public class SonarAuthHeaderService {
-    private static final Logger logger = Logger.getLogger(SonarAuthHeaderService.class);
+public class SonarAuthHeader {
+    private static final Logger logger = Logger.getLogger(SonarAuthHeader.class);
     @Value("${sonar.username}")
     private String sonarUsername;
     @Value("${sonar.ps}")

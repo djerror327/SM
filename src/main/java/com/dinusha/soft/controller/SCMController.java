@@ -21,7 +21,8 @@ public class SCMController {
     @GetMapping("/v1/scm/commits/{projectKey}/{date}")
     public List<Object> getCommits(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/scm/commits/" + projectKey + "/" + date);
-        sonarCache.createSCMCache(projectKey, date);
+//        sonarCache.createSCMCache(projectKey, date);
+        sonarCache.checkSCMCache(projectKey, date);
 //        return scmService.getCommits.apply(projectKey, date);
         return null;
     }

@@ -2,7 +2,7 @@ package com.dinusha.soft.service;
 
 import com.dinusha.soft.utills.JsonUtil;
 import com.dinusha.soft.utills.Paginate;
-import com.dinusha.soft.utills.SonarAuthHeaderService;
+import com.dinusha.soft.utills.SonarAuthHeader;
 import com.dinusha.soft.webclient.Client;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -29,7 +29,7 @@ public class SonarFileService {
     @Autowired
     private Client client;
     @Autowired
-    private SonarAuthHeaderService sonarAuthHeaderService;
+    private SonarAuthHeader sonarAuthHeaderService;
     @Autowired
     private BranchService branchService;
     @Value("${sonar.host}")

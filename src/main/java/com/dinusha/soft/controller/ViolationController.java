@@ -21,7 +21,8 @@ public class ViolationController {
     @GetMapping("/v1/violations/{projectKey}/{date}")
     public List<Object> getViolations(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/violations/" + projectKey + "/" + date);
-        sonarCache.createViolationCache(projectKey, date);
+//        sonarCache.createViolationCache(projectKey, date);
+        sonarCache.checkViolationCache(projectKey, date);
 //        return violationService.getViolation.apply(projectKey, date);
         return null;
     }
