@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class SCMController {
@@ -22,8 +24,12 @@ public class SCMController {
     public List<Object> getCommits(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/scm/commits/" + projectKey + "/" + date);
 //        sonarCache.createSCMCache(projectKey, date);
-        sonarCache.checkSCMCache(projectKey, date);
+//        sonarCache.checkSCMCache(projectKey, date);
 //        return scmService.getCommits.apply(projectKey, date);
-        return null;
+        Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
+        List<Object> response = new ArrayList<>();
+        response.add(cacheData.get("scm"));
+        return response;
+//        return null;
     }
 }
