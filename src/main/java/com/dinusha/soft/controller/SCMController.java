@@ -21,7 +21,7 @@ public class SCMController {
     private SonarCache sonarCache;
 
     @GetMapping("/v1/scm/commits/{projectKey}/{date}")
-    public List<Object> getCommits(@PathVariable String projectKey, @PathVariable String date) {
+    public String getCommits(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/scm/commits/" + projectKey + "/" + date);
 //        sonarCache.createSCMCache(projectKey, date);
 //        sonarCache.checkSCMCache(projectKey, date);
@@ -29,7 +29,7 @@ public class SCMController {
         Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
         List<Object> response = new ArrayList<>();
         response.add(cacheData.get("scm"));
-        return response;
+        return cacheData.get("scm");
 //        return null;
     }
 }
