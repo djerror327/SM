@@ -4,6 +4,7 @@ import com.dinusha.soft.service.AnalysisService;
 import com.dinusha.soft.service.SCMService;
 import com.dinusha.soft.service.ViolationService;
 import com.dinusha.soft.utills.JsonUtil;
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -18,9 +19,13 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BooleanSupplier;
 
 @Component
 public class SonarCache {
+
+    private static final Logger logger = Logger.getLogger(SonarCache.class);
+
     private static final String CACHE_PATH = "./cache/";
 
     @Autowired
@@ -32,9 +37,18 @@ public class SonarCache {
     @Autowired
     private AnalysisService analysisService;
 
-    public void deleteAllCache() throws IOException {
-        Files.deleteIfExists(Paths.get(CACHE_PATH));
-    }
+
+    public final BooleanSupplier deleteAllCache = () -> {
+        try {
+            logger.info("Deleting cache folder");
+            return Files.deleteIfExists(Paths.get(CACHE_PATH));
+        } catch (IOException e) {
+            logger.error(e.getStackTrace());
+        }
+        logger.warn("Cache folder is not deleted!");
+        return false;
+    };
+
 
     public boolean checkCacheFolderExist() throws IOException {
         return Files.isDirectory(Paths.get(CACHE_PATH));
