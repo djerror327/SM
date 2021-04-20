@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,8 +23,8 @@ public class ViolationController {
         logger.debug("GET : /v1/violations/" + projectKey + "/" + date);
 //        sonarCache.createViolationCache(projectKey, date);
         Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
-        List<Object> response = new ArrayList<>();
-        response.add(cacheData.get("violation"));
+//        List<Object> response = new ArrayList<>();
+//        response.add(cacheData.get("violation"));
 //        System.out.println("controller get violation : " + cacheData.get("violation"));
 //        System.out.println("debug controller response : " + response);
 //        System.out.println("debug controller realtime : " + violationService.getViolation.apply(projectKey, date));
