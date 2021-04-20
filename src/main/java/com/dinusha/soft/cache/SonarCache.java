@@ -52,7 +52,7 @@ public class SonarCache {
         return Files.exists(scmPath);
     }
 
-    public void createAnalysisCache(String projectKey) {
+    public void createBranchAnalysisCacheJson(String projectKey) {
         Map<String, Map<String, String>> branchesAnalysis = analysisService.getBranchesAnalysis(projectKey);
         JSONObject jsonObject = jsonUtil.mapToJsonObject.apply(branchesAnalysis);
         createCacheAnalysisFile(jsonObject.toJSONString(), projectKey, "branchAnalysis");
@@ -151,8 +151,8 @@ public class SonarCache {
                                 cachedFileData.put("violation", violation);
                                 cachedFileData.put("scm", scm);
 
-                                //create cache file
-                                createAnalysisCache(projectKey);
+                                //create branch analysis cache json
+                                createBranchAnalysisCacheJson(projectKey);
                                 return cachedFileData;
                             }
                         } else if (timestamp.get("uiTimestamp").equals(timestamp.get("apiTimestamp"))) {
@@ -167,8 +167,8 @@ public class SonarCache {
                                 cachedFileData.put("violation", violation);
                                 cachedFileData.put("scm", scm);
 
-                                //create cache file
-                                createAnalysisCache(projectKey);
+                                //create branch analysis cache json
+                                createBranchAnalysisCacheJson(projectKey);
                                 return cachedFileData;
                             } else {
                                 //check api branch analysis and cached jason file timestamp. if there is time mismatch then recreate cache
@@ -183,8 +183,8 @@ public class SonarCache {
                                         cachedFileData.put("violation", violation);
                                         cachedFileData.put("scm", scm);
 
-                                        //create cache file
-                                        createAnalysisCache(projectKey);
+                                        //create branch analysis cache json
+                                        createBranchAnalysisCacheJson(projectKey);
                                         return cachedFileData;
                                     }
 
@@ -206,8 +206,8 @@ public class SonarCache {
                                     cachedFileData.put("violation", violation);
                                     cachedFileData.put("scm", scm);
 
-                                    //create cache file
-                                    createAnalysisCache(projectKey);
+                                    //create branch analysis cache json
+                                    createBranchAnalysisCacheJson(projectKey);
                                     return cachedFileData;
                                     //re write cache
                                 }
@@ -225,8 +225,8 @@ public class SonarCache {
                             cachedFileData.put("violation", jsonArrViolation.toJSONString());
                             cachedFileData.put("scm", jsonArrSCM.toJSONString());
 
-                            //create cache file
-                            createAnalysisCache(projectKey);
+//                            //create cache file
+//                            createAnalysisCache(projectKey);
                             return cachedFileData;
                         }
                     }
@@ -240,8 +240,8 @@ public class SonarCache {
                 cachedFileData.put("violation", violation);
                 cachedFileData.put("scm", scm);
 
-                //create cache file
-                createAnalysisCache(projectKey);
+                //create branch analysis cache json
+                createBranchAnalysisCacheJson(projectKey);
                 return cachedFileData;
             }
         } catch (IOException e) {
