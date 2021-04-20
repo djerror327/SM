@@ -16,7 +16,6 @@ import java.util.function.BinaryOperator;
 @Configuration
 public class Client {
     private static final Logger logger = Logger.getLogger(Client.class);
-    private static final String LINE = "======================";
     public final BinaryOperator<String> getWithAuthHeader = (authHeader, uri) -> {
 
         logger.info("GET -> " + uri);
@@ -27,13 +26,9 @@ public class Client {
 
                 HttpEntity entity = Objects.requireNonNull(response).getEntity();
                 if (response.getStatusLine().getStatusCode() == 200) {
-                    logger.info(LINE);
                     logger.info("Status Code : " + response.getStatusLine().getStatusCode());
-                    logger.info(LINE);
                 } else {
-                    logger.error(LINE);
-                    logger.error("Status Code : " + response.getStatusLine().getStatusCode());
-                    logger.error(LINE);
+                    logger.warn("Status Code : " + response.getStatusLine().getStatusCode());
                 }
                 return EntityUtils.toString(entity);
             }
