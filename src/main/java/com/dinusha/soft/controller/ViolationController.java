@@ -27,9 +27,9 @@ public class ViolationController {
         Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
         List<Object> response = new ArrayList<>();
         response.add(cacheData.get("violation"));
-        System.out.println("controller get violation : " + cacheData.get("violation"));
-        System.out.println("debug controller response : " + response);
-        System.out.println("debug controller realtime : " + violationService.getViolation.apply(projectKey, date));
+//        System.out.println("controller get violation : " + cacheData.get("violation"));
+//        System.out.println("debug controller response : " + response);
+//        System.out.println("debug controller realtime : " + violationService.getViolation.apply(projectKey, date));
         return cacheData.get("violation");
 
 //        return violationService.getViolation.apply(projectKey, date);

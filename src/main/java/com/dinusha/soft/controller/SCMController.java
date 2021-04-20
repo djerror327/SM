@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,8 +25,8 @@ public class SCMController {
 //        sonarCache.checkSCMCache(projectKey, date);
 //        return scmService.getCommits.apply(projectKey, date);
         Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
-        List<Object> response = new ArrayList<>();
-        response.add(cacheData.get("scm"));
+//        List<Object> response = new ArrayList<>();
+//        response.add(cacheData.get("scm"));
         return cacheData.get("scm");
 //        return null;
     }
