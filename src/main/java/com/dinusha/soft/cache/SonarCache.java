@@ -70,6 +70,7 @@ public class SonarCache {
         createCacheFile(jsonSCMnArray, projectKey, date, "scm");
         return jsonSCMnArray;
     };
+
     private final BiConsumer<String, String> createCacheAnalysisFile = (json, projectKey) -> {
         String folderPAth = CACHE_PATH + projectKey;
         try {
@@ -82,6 +83,7 @@ public class SonarCache {
             e.printStackTrace();
         }
     };
+
     private final Consumer<String> createBranchAnalysisCacheJson = projectKey -> {
         Map<String, Map<String, String>> branchesAnalysis = analysisService.getBranchesAnalysis(projectKey);
         JSONObject jsonObject = jsonUtil.mapToJsonObject.apply(branchesAnalysis);
@@ -115,6 +117,7 @@ public class SonarCache {
         System.out.println("JSON FILE CONTENT FOR STRING BUILDER :" + analysisFileContent);
         return analysisFileContent;
     };
+
     private final BiFunction<String, String, Map<String, Long>> getMillis = (date, apiDate) -> {
         DateTime cachedTimestamp = new DateTime(date);
         DateTime apiTimestamp = new DateTime(apiDate);
@@ -128,12 +131,14 @@ public class SonarCache {
         timestamp.put("apiMillis", apiTimestamp.getMillis());
         return timestamp;
     };
+
     private final BiFunction<String, String, Map<String, String>> getCachedData = (violation, scm) -> {
         Map<String, String> cachedFileData = new HashMap<>();
         cachedFileData.put("violation", violation);
         cachedFileData.put("scm", scm);
         return cachedFileData;
     };
+
     @SuppressWarnings("rawtypes")
     public final BiFunction<String, String, Map<String, String>> checkAnalysisCache = (projectKey, date) -> {
         //api analysis
@@ -146,49 +151,32 @@ public class SonarCache {
             jsonBranchesAPI = new JSONObject((Map) jsonObject.get(key));
             branchesAPISize = jsonBranchesAPI.size();
         }
-//        //cache analysis
+        //cache analysis
         String folderPAth = CACHE_PATH + projectKey + "/branchAnalysis.json";
         String violationPath = CACHE_PATH + projectKey + "/" + date + "/" + "violation.json";
         String scmPath = CACHE_PATH + projectKey + "/" + date + "/" + "scm.json";
+
         if (checkCacheFolderExist.getAsBoolean()) {
             StringBuilder analysisFileContent = readCacheFile.apply(folderPAth);
-
             JSONObject cachedJsonProject = jsonUtil.stringToJsonObject.apply(analysisFileContent.toString());
             for (Object key : cachedJsonProject.keySet()) {
-
                 //if month is less than the api latest analysis month the return the cache if available. else get data from api and create a cached and return the cache file
                 for (Object apiKey : jsonBranchesAPI.keySet()) {
-
                     //get api date
                     String apiDate = (jsonBranchesAPI.get(apiKey).toString()).substring(0, 10);
-
                     //convert to 1st of the current date od api for ui match
                     Map<String, Long> timestamp = getMillis.apply(date, apiDate);
-
                     //check cache folder is exist. if not create cache
                     //if date is smaller than api then return cache if not exist then create cache
                     if (timestamp.get("dateMillis") < timestamp.get("apiMillis")) {
-
                         //check cache available the return else create cache and return
-
                         if (checkViolationCache.test(projectKey, date) && checkSCMCache.test(projectKey, date)) {
-//                                Map<String, String> cachedFileData = new HashMap<>();
-//                                cachedFileData.put("violation", String.valueOf(readCacheFile(violationPath)));
-//                                cachedFileData.put("scm", String.valueOf(readCacheFile(scmPath)));
-
                             return getCachedData.apply(String.valueOf(readCacheFile.apply(violationPath)), String.valueOf(readCacheFile.apply(scmPath)));
                         } else {
                             //create branch analysis cache json
                             createBranchAnalysisCacheJson.accept(projectKey);
                             String violation = createViolationCache.apply(projectKey, date);
                             String scm = createSCMCache.apply(projectKey, date);
-//                                Map<String, String> cachedFileData = new HashMap<>();
-//                                cachedFileData.put("violation", violation);
-//                                cachedFileData.put("scm", scm);
-
-//                                //create branch analysis cache json
-//                                createBranchAnalysisCacheJson(projectKey);
-
                             return getCachedData.apply(violation, scm);
                         }
                     } else if (timestamp.get("dateMillis").equals(timestamp.get("apiMillis"))) {
@@ -200,14 +188,8 @@ public class SonarCache {
                             createBranchAnalysisCacheJson.accept(projectKey);
                             String violation = createViolationCache.apply(projectKey, date);
                             String scm = createSCMCache.apply(projectKey, date);
-//                                Map<String, String> cachedFileData = new HashMap<>();
-//                                cachedFileData.put("violation", violation);
-//                                cachedFileData.put("scm", scm);
-
                             //create branch analysis cache json
-//                                createBranchAnalysisCacheJson(projectKey);
                             return getCachedData.apply(violation, scm);
-//                                return cachedFileData;
                         } else {
                             //check api branch analysis and cached jason file timestamp. if there is time mismatch then recreate cache
                             for (Object cachedKey : cachedJsonBranches.keySet()) {
@@ -219,26 +201,13 @@ public class SonarCache {
                                     createBranchAnalysisCacheJson.accept(projectKey);
                                     String violation = createViolationCache.apply(projectKey, date);
                                     String scm = createSCMCache.apply(projectKey, date);
-//                                        Map<String, String> cachedFileData = new HashMap<>();
-//                                        cachedFileData.put("violation", violation);
-//                                        cachedFileData.put("scm", scm);
-
                                     //create branch analysis cache json
-//                                        createBranchAnalysisCacheJson(projectKey);
                                     return getCachedData.apply(violation, scm);
-//                                        return cachedFileData;
                                 }
 
                             }
-
                             if (checkViolationCache.test(projectKey, date) && checkSCMCache.test(projectKey, date)) {
-//                                    Map<String, String> cachedFileData = new HashMap<>();
-//                                    cachedFileData.put("violation", String.valueOf(readCacheFile(violationPath)));
-//                                    cachedFileData.put("scm", String.valueOf(readCacheFile(scmPath)));
-//                                    System.out.println("debug cache file data : " + cachedFileData);
-//                                    System.out.println("debug cache file data get violation : " + cachedFileData.get("violation"));
                                 return getCachedData.apply(String.valueOf(readCacheFile.apply(violationPath)), String.valueOf(readCacheFile.apply(scmPath)));
-//                                    return cachedFileData;
                             }
                             //if cache file not available for current month
                             else {
@@ -246,15 +215,8 @@ public class SonarCache {
                                 createBranchAnalysisCacheJson.accept(projectKey);
                                 String violation = createViolationCache.apply(projectKey, date);
                                 String scm = createSCMCache.apply(projectKey, date);
-//                                    Map<String, String> cachedFileData = new HashMap<>();
-//                                    cachedFileData.put("violation", violation);
-//                                    cachedFileData.put("scm", scm);
-
                                 //create branch analysis cache json
-//                                    createBranchAnalysisCacheJson(projectKey);
-
                                 return getCachedData.apply(violation, scm);
-                                //re write cache
                             }
                         }
                     }
@@ -262,18 +224,10 @@ public class SonarCache {
                     else {
                         List<Object> violationAPI = violationService.getViolation.apply(projectKey, date);
                         List<Object> scmAPI = scmService.getCommits.apply(projectKey, date);
-//                            Map<String, String> cachedFileData = new HashMap<>();
-
                         JSONArray jsonArrViolation = jsonUtil.listToJsonArray.apply(violationAPI);
                         JSONArray jsonArrSCM = jsonUtil.listToJsonArray.apply(scmAPI);
-
-//                            cachedFileData.put("violation", jsonArrViolation.toJSONString());
-//                            cachedFileData.put("scm", jsonArrSCM.toJSONString());
-
-//                            //create cache file
-//                            createAnalysisCache(projectKey);
+                        //create cache file
                         return getCachedData.apply(jsonArrViolation.toJSONString(), jsonArrSCM.toJSONString());
-//                            return cachedFileData;
                     }
                 }
             }
@@ -281,23 +235,15 @@ public class SonarCache {
             //create branch analysis cache json
             createBranchAnalysisCacheJson.accept(projectKey);
             //if cache folder is not available re create cache
-//                Map<String, String> cachedFileData = new HashMap<>();
             String violation = createViolationCache.apply(projectKey, date);
             String scm = createSCMCache.apply(projectKey, date);
-//
-//                cachedFileData.put("violation", violation);
-//                cachedFileData.put("scm", scm);
-
-
             return getCachedData.apply(violation, scm);
-//                return cachedFileData;
         }
         return null;
     };
 
     private void createCacheFile(String json, String projectKey, String date, String fileName) {
         String folderPAth = CACHE_PATH + projectKey + "/" + date;
-
         try {
             Path path = Paths.get(folderPAth);
             Files.createDirectories(path);
@@ -307,8 +253,5 @@ public class SonarCache {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
