@@ -32,6 +32,8 @@ public class ViolationService {
     private BranchService branchService;
     @Value("${sonar.host}")
     private String host;
+    @Value("${sonar.issue.limitation}")
+    private String issueLimitation;
 
     //SonarQubeOpenViolationMonitor
     public final BiFunction<String, String, List<Object>> getViolation = (sonarProjectKey, date) -> {
@@ -63,6 +65,14 @@ public class ViolationService {
             //loop all pages and collect violation data
             logger.info("Reading violations of branch : " + branch);
             for (int page = 1; page <= recursionCount; page++) {
+
+                //community edition api limitation logic
+                int limitation = Integer.parseInt(issueLimitation);
+                if (limitation <= page * 500) {
+                    logger.debug("API limitation reach limit : " + limitation + " -> " + page * 500);
+                    break;
+                }
+
                 String violationObj = client.getWithAuthHeader.apply(sonarAuthHeaderService.authHeader.get(), host + "api/issues/search?projectKeys=" + sonarProjectKey + "&resolved=false&branch=" + branch + "&ps=500&p=" + page + "");
                 JSONObject jsonViolation = jsonUtil.stringToJsonObject.apply(violationObj);
                 JSONArray issueArr = (JSONArray) jsonViolation.get("issues");
