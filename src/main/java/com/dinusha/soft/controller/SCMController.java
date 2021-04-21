@@ -24,7 +24,7 @@ public class SCMController {
 //        sonarCache.createSCMCache(projectKey, date);
 //        sonarCache.checkSCMCache(projectKey, date);
 //        return scmService.getCommits.apply(projectKey, date);
-        Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
+        Map<String, String> cacheData = sonarCache.checkAnalysisCache.apply(projectKey, date);
 //        List<Object> response = new ArrayList<>();
 //        response.add(cacheData.get("scm"));
         return cacheData.get("scm");

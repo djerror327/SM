@@ -22,7 +22,7 @@ public class ViolationController {
     public String getViolations(@PathVariable String projectKey, @PathVariable String date) {
         logger.debug("GET : /v1/violations/" + projectKey + "/" + date);
 //        sonarCache.createViolationCache(projectKey, date);
-        Map<String, String> cacheData = sonarCache.checkAnalysisCache(projectKey, date);
+        Map<String, String> cacheData = sonarCache.checkAnalysisCache.apply(projectKey, date);
 //        List<Object> response = new ArrayList<>();
 //        response.add(cacheData.get("violation"));
 //        System.out.println("controller get violation : " + cacheData.get("violation"));
