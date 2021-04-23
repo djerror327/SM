@@ -26,8 +26,6 @@ public class SCMCache {
 
     private static final Logger logger = Logger.getLogger(SCMCache.class);
 
-    private static final String CACHE_PATH = "./cache/";
-
     @Autowired
     private SCMService scmService;
     @Autowired
@@ -52,7 +50,7 @@ public class SCMCache {
     };
 
     private final BiPredicate<String, String> checkSCMCache = (String projectKey, String date) -> {
-        String folderPAth = CACHE_PATH + projectKey + "/" + date;
+        String folderPAth = commonCache.getCachedPath.get() + projectKey + "/" + date;
         Path scmPath = Paths.get(folderPAth + "/scm.json");
         logger.debug("Checking SCM cache json exist : projectKey: " + projectKey + " +date : " + date + " path : " + scmPath);
         return Files.exists(scmPath);
@@ -78,8 +76,8 @@ public class SCMCache {
             branchesAPISize = jsonBranchesAPI.size();
         }
         //cache analysis
-        String folderPAth = CACHE_PATH + projectKey + "/branchAnalysis.json";
-        String scmPath = CACHE_PATH + projectKey + "/" + date + "/" + "scm.json";
+        String folderPAth = commonCache.getCachedPath.get() + projectKey + "/branchAnalysis.json";
+        String scmPath = commonCache.getCachedPath.get() + projectKey + "/" + date + "/" + "scm.json";
         if (commonCache.checkCacheFolderExist.getAsBoolean() && commonCache.checkCacheFile.test(folderPAth)) {
             StringBuilder analysisFileContent = commonCache.readCacheFile.apply(folderPAth);
             JSONObject cachedJsonProject = jsonUtil.stringToJsonObject.apply(analysisFileContent.toString());
@@ -179,7 +177,6 @@ public class SCMCache {
             //create cache file
             Map<String, String> cachedFileData = new HashMap<>();
             cachedFileData.put("scm", jsonArrSCM.toJSONString());
-
             return cachedFileData;
         }
         return null;

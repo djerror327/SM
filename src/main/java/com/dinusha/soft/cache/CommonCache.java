@@ -31,6 +31,8 @@ public class CommonCache {
     @Autowired
     private AnalysisService analysisService;
 
+    Supplier<String> getCachedPath = () -> CACHE_PATH;
+
     public final BooleanSupplier deleteAllCache = () -> {
         try {
             logger.info("Deleting cache folder");
