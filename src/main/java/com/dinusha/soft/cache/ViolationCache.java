@@ -35,6 +35,8 @@ public class ViolationCache {
     private JsonUtil jsonUtil;
     @Autowired
     private AnalysisService analysisService;
+    @Autowired
+    private CommonCache commonCache;
     @Value("${cache.enable}")
     private String cacheEnable;
 
@@ -125,7 +127,7 @@ public class ViolationCache {
     private final Function<String, Map<String, String>> getCachedData = violation -> {
         Map<String, String> cachedFileData = new HashMap<>();
         cachedFileData.put("violation", violation);
-        logger.debug("Returning  violations String data as Map");
+        logger.debug("Violations reading completed!");
         return cachedFileData;
     };
 
@@ -145,7 +147,7 @@ public class ViolationCache {
         String folderPAth = CACHE_PATH + projectKey + "/branchAnalysis.json";
         String violationPath = CACHE_PATH + projectKey + "/" + date + "/" + "violation.json";
 
-        if (checkCacheFolderExist.getAsBoolean()) {
+        if (checkCacheFolderExist.getAsBoolean() && commonCache.checkCacheFile.test(folderPAth)) {
             StringBuilder analysisFileContent = readCacheFile.apply(folderPAth);
             JSONObject cachedJsonProject = jsonUtil.stringToJsonObject.apply(analysisFileContent.toString());
             for (Object key : cachedJsonProject.keySet()) {
