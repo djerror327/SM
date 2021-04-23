@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -36,8 +37,9 @@ public class CommonCache {
     public final BooleanSupplier deleteAllCache = () -> {
         try {
             logger.info("Deleting cache folder");
-            return Files.deleteIfExists(Paths.get(CACHE_PATH));
+            return FileSystemUtils.deleteRecursively(Paths.get(CACHE_PATH));
         } catch (IOException e) {
+            e.getStackTrace();
             logger.error(e.getStackTrace());
         }
         logger.warn("Cache folder is not deleted!");
