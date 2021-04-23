@@ -61,12 +61,44 @@
 
     <build>
         <plugins>
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--                <version>2.3.9.RELEASE</version>-->
+            <!--            </plugin>-->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.3.9.RELEASE</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/libs
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>libs/</classpathPrefix>
+                            <mainClass>com.dinusha.soft.AppStarter</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -79,6 +111,9 @@
                                 <!-- main application -->
                                 <copy file="${basedir}/target/${project.artifactId}-${project.version}.jar"
                                       todir="${basedir}/deploy/S-Monitor"/>
+                                <copy todir="${basedir}/deploy/S-Monitor/libs">
+                                    <fileset dir="${basedir}/target/libs" includes="**"/>
+                                </copy>
                                 <copy file="${basedir}/start.bat" todir="${basedir}/deploy/S-Monitor"/>
                                 <copy file="${basedir}/start.sh" todir="${basedir}/deploy/S-Monitor"/>
                                 <copy file="${basedir}/src/main/resources/application.properties"
