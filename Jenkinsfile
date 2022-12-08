@@ -1,9 +1,11 @@
 pipeline{
     agent any
     stages{
-        stage("A"){
+        stage("docker build"){
             steps{
-                echo "========executing A========"
+                echo "========Building image ========"
+                echo pwd
+                echo ls -l
             }
             post{
                 always{
