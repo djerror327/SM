@@ -4,8 +4,8 @@ pipeline{
         stage("docker build"){
             steps{
                 echo "========Building image ========"
-                echo pwd
-                echo ls -l
+                sh pwd
+                sh ls -l
             }
             post{
                 always{
