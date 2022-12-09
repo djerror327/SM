@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("build app"){
             steps{
-                sh "mvn build"
+                sh "mvn clean install"
             }
         }
         stage("docker build"){
