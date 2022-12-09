@@ -13,7 +13,7 @@ pipeline{
             steps{
                 echo "========Building image ========"
                 sh "pwd"
-                sh "ls -l"
+                sh "ls -l deploy"
                 sh "docker build -t localhost:5000/sm:latest ."
                 sh "docker image ls"
                 sh "docker push localhost:5000/sm:latest"
