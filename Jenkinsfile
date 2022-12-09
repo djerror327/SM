@@ -1,6 +1,11 @@
 pipeline{
     agent any
     stages{
+        stage("build app"){
+            steps{
+                sh "mvn build"
+            }
+        }
         stage("docker build"){
             steps{
                 echo "========Building image ========"
