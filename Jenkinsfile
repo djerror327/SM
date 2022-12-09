@@ -14,7 +14,7 @@ pipeline{
                 echo "========Building image ========"
                 sh "pwd"
                 sh "ls -l deploy/S-Monitor"
-                sh "docker build -t localhost:5000/sm:latest -f ./deploy/S-Monitor/Dockerfile"
+                sh "docker build -t localhost:5000/sm:latest ./deploy/S-Monitor/"
                 sh "docker image ls"
                 sh "docker push localhost:5000/sm:latest"
                 sh "docker rmi localhost:5000/sm:latest"
