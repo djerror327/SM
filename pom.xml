@@ -82,6 +82,10 @@
                                       todir="${basedir}/deploy/S-Monitor"/>
                                 <copy file="${basedir}/src/main/resources/log4j.properties"
                                       todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/Dockerfile"
+                                      todir="${basedir}/deploy/S-Monitor"/>
+                                <copy file="${basedir}/deployment.yaml"
+                                      todir="${basedir}/deploy/S-Monitor"/>
 
                                 <!-- docker application-->
                                 <!--                                <copy file="${basedir}/docker-compose.yml"-->
