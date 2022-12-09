@@ -13,7 +13,7 @@ pipeline{
             steps{
                 echo "========Building image ========"
                 sh "pwd"
-                sh "ls -l deploy"
+                sh "ls -l deploy/S-Monitor"
                 sh "docker build -t localhost:5000/sm:latest ."
                 sh "docker image ls"
                 sh "docker push localhost:5000/sm:latest"
@@ -23,6 +23,7 @@ pipeline{
         }
         stage("docker run"){
             steps{
+                sh "docker rm -f sm_latets"
                 sh "docker run -d -p 8088:8080 --name sm_latets localhost:5000/sm:latest"
                 sh "docker ps"
             }
