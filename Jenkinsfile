@@ -6,6 +6,8 @@ pipeline{
                 echo "========Building image ========"
                 sh "pwd"
                 sh "ls -l"
+                sh "docker build -t sm:latest ."
+                sh "docker image ls"
             }
             // post{
             //     always{
