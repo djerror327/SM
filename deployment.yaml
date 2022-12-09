@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
         - name: sm 
-          image: localhost:5000/sm # Image that will be used to containers in the cluster
+          image: localhost:5000/sm:latest # Image that will be used to containers in the cluster
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
