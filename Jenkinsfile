@@ -24,7 +24,7 @@ pipeline{
         // stage("docker run"){
         //     steps{
         //         sh "docker rm -f sm_latets"
-        //         sh "docker run -d -p 8088:8080 --name sm_latets localhost:5000/sm:latest"
+        //         sh "docker run -d -p 8089:8080 --name sm_latets localhost:5000/sm:latest"
         //         sh "docker ps"
         //     }
         // }
