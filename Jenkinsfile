@@ -28,6 +28,12 @@ pipeline{
                 sh "docker ps"
             }
         }
+
+        stage("kubernates deploy"){
+            steps{
+                sh "kubectl get nodes"
+            }
+        }
             // post{
             //     always{
             //         echo "========always========"
